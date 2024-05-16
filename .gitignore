@@ -1,3 +1,4 @@
-.exe
-.gitattributes
+*.exe
+*.gitattributes
 t.cpp
+*.vscode
