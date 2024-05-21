@@ -1,4 +1,5 @@
 *.exe
 *.gitattributes
 t.cpp
+t.exe
 *.vscode
