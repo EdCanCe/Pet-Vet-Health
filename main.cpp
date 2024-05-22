@@ -7,6 +7,17 @@ using namespace std;
 
 
 
+class Operations{
+    public:
+        string getAgeDifference(vector<int>);
+};
+string Operations::getAgeDifference(vector<int> pastDate){
+
+}
+
+
+
+
 class Pet{
     private:
         string name;
@@ -15,14 +26,40 @@ class Pet{
         int birthYear;
         string breed;
         string annotations; // Any allergies, etc.
-        bool status; // {Alive, With the owner} / {Deceased, In the wild}
+        vector<int> getBirth();
     public:
         Pet(string, int, int, int, string, string);
         void setAnnotations(string);
-        void setStatus(bool);
-
+        string getName(); //Used when owner selects which pet is being treated
+        string getAnnotations();
+        void showData();
 };
-
+Pet::Pet(string newName, int newBirthDay, int newBirthMonth, int newBirthYear, string newBreed, string newAnnotations){
+    name=newName;
+    birthDay=newBirthDay;
+    birthMonth=newBirthMonth;
+    birthYear=newBirthYear;
+    breed=newBreed;
+    annotations=newAnnotations;
+}
+void Pet::setAnnotations(string newAnnotations){
+    annotations=newAnnotations;
+}
+string Pet::getName(){
+    return name;
+}
+vector<int> Pet::getBirth(){
+    vector<int> aux={birthDay, birthMonth, birthYear};
+    return aux;
+}
+string Pet::getAnnotations(){
+    return annotations;
+}
+void Pet::showData(){
+    Operations oper;
+    cout<<name<<": "<<breed<<cnl;
+    cout<<oper.getAgeDifference(getBirth())<<" years old\n";
+}
 
 
 
@@ -33,7 +70,6 @@ class Person{
 
     public:
         Person(string, string);
-        void showData();
         void setNumber(string);
         string getName();
         string getPhone();
@@ -42,6 +78,52 @@ Person::Person(string newName, string newPhoneNumber){
     name=newName;
     phoneNumber=newPhoneNumber;
 }
+void Person::setNumber(string newPhoneNumber){
+    phoneNumber=newPhoneNumber;
+}
+string Person::getName(){
+    return name;
+}
+string Person::getPhone(){
+    return phoneNumber;
+}
+
+
+
+
+class Owner : public Person{
+    private:
+        string id;
+        vector<Pet> pets;
+    public:
+        Owner(string, string);
+        Owner(string, string, vector<Pet>);
+        void showPets();
+        void addPet();
+};
+Owner::Owner(string newName, string newPhoneNumber):Person(newName, newPhoneNumber){}
+Owner::Owner(string newName, string newPhoneNumber, vector<Pet> newPets):Person(newName, newPhoneNumber){
+    pets=newPets;
+}
+void Owner::showPets(){
+    if(pets.size()>0){
+        fore(i,0,pets.size()){
+            pets[i].showData();
+            nl;
+        }
+    }else{
+        cout<<"There are no pets\n";
+    }
+}
+
+
+
+class Vet : public Person{
+    private:
+
+    public:
+};
+
 
 
 
