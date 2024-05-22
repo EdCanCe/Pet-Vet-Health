@@ -6,4 +6,4 @@ Pet Vet Health es un proyecto realizado en la clase TC1030. Trata sobre un siste
 
 La composición de las clases se puede ver en el siguiente diagrama:
 
-![](Primer%20Avance/Primer%20Avance%20-%20JPG.jpeg)
+![](UML.jpeg)
