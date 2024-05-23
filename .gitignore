@@ -1,5 +1,7 @@
 *.exe
 *.gitattributes
 t.cpp
-t.exe
+*.exe
+*.out
+*.txt
 *.vscode
