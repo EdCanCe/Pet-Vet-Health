@@ -3,6 +3,7 @@
 ---
 
 **Elementos corregidos**
+
 Se añadió la sección de elementos que pueden hacer que el programa deje de funcionar
 
 ---
