@@ -1,7 +1,5 @@
 #include <bits/stdc++.h>
 #define fore(i, l, r) for (long long i = (l); i < (r); i++)
-#define nl cout<<"\n"
-#define cnl "\n"
 #define rfc "\033[31;1m"
 #define gfc "\033[32;1m"
 #define yfc "\033[33;1m"
@@ -56,6 +54,7 @@ class Pet{
         int cage=0; // In case the pet stays in the veterinary, cage assigns the cage where the pet was put in.
     public:
         Pet(string, int, int, int, string, string);
+        Pet(string, int, int, int, string);
         void setAnnotations(string);
         void setCage(int);
         string getName(); //Used when owner selects which pet is being treated
@@ -70,6 +69,14 @@ Pet::Pet(string newName, int newBirthDay, int newBirthMonth, int newBirthYear, s
     birthYear=newBirthYear;
     breed=newBreed;
     annotations=newAnnotations;
+}
+Pet::Pet(string newName, int newBirthDay, int newBirthMonth, int newBirthYear, string newBreed){
+    name=newName;
+    birthDay=newBirthDay;
+    birthMonth=newBirthMonth;
+    birthYear=newBirthYear;
+    breed=newBreed;
+    annotations="";
 }
 void Pet::setAnnotations(string newAnnotations){
     annotations=newAnnotations;
@@ -94,10 +101,10 @@ void Pet::showData(){
     cout<<gfc<<name<<nfc<<": "<<breed<<" - ";
     cout<<oper.getAgeDifference(getBirth())<<" years old\n";
     if(annotations!=""){
-        cout<<"Special annotations:\n"<<annotations<<cnl;
+        cout<<"Special annotations:\n"<<annotations<<"\n";
     }
     if(cage!=0){
-        cout<<"Cage: "<<cage<<cnl;
+        cout<<"Cage: "<<cage<<"\n";
     }
 }
 
@@ -106,15 +113,18 @@ void Pet::showData(){
 class Person{
     protected:
         string name;
+        string lastName;
         string phoneNumber;
     public:
-        Person(string, string);
+        Person(string, string, string);
         void setNumber(string);
         string getName();
         string getPhone();
+        void showData();
 };
-Person::Person(string newName, string newPhoneNumber){
+Person::Person(string newName, string newLastName, string newPhoneNumber){
     name=newName;
+    lastName=newLastName;
     phoneNumber=newPhoneNumber;
 }
 void Person::setNumber(string newPhoneNumber){
@@ -126,70 +136,45 @@ string Person::getName(){
 string Person::getPhone(){
     return phoneNumber;
 }
+void Person::showData(){
+    cout<<gfc<<lastName<<" "<<name<<nfc<<":\n";
+    cout<<"Phone: "<<phoneNumber<<"\n";
+}
 
 
 
 
 class Owner : public Person{
     private:
-        vector<Pet> pets;
+        vector<Pet*> pets;
     public:
-        Owner(string, string);
-        Owner(string, string, vector<Pet>);
+        Owner(string, string, string);
         void showPets();
-        void addPet();
+        void addPet(Pet&);
         int petSize();
         Pet& getPet(int);
 };
-Owner::Owner(string newName, string newPhoneNumber):Person(newName, newPhoneNumber){}
-Owner::Owner(string newName, string newPhoneNumber, vector<Pet> newPets):Person(newName, newPhoneNumber){
-    pets=newPets;
-}
+Owner::Owner(string newName, string newLastName, string newPhoneNumber):Person(newName, newLastName, newPhoneNumber){}
 void Owner::showPets(){
     if(pets.size()>0){
         fore(i,0,pets.size()){
             cout<<i<<".- ";
-            pets[i].showData();
-            nl;
+            pets[i]->showData();
+            cout<<"\n";
         }
     }else{
         cout<<rfc<<"There are no pets\n\n"<<nfc;
     }
 }
-void Owner::addPet(){
-    cout<<yfc<<"[[ PET CREATION ]]"<<nfc<<cnl;
-    string newName, newBreed, newAnnotations;
-    cout<<"Name of the pet: ";
-    cin.ignore();
-    getline(cin, newName);
-    int bday, bmonth, byear;
-    cout<<"Date of birth:\n\tDay(0-31): ";
-    cin>>bday;
-    cout<<"\tMonth(1-12): ";
-    cin>>bmonth;
-    cout<<"\tYear(19XX-20XX): ";
-    cin>>byear;
-    byear-=1900;
-    cout<<"Type of breed: ";
-    cin.ignore();
-    getline(cin, newBreed);
-    cout<<"Any special annotations like allergies? Y/N ";
-    char c; cin>>c;
-    if(c=='Y'){
-        cout<<"Annotations: ";
-        cin.ignore();
-        getline(cin, newAnnotations);
-    }
-    pets.push_back(Pet(newName, bday, bmonth, byear, newBreed, newAnnotations));
-    nl;
+void Owner::addPet(Pet& newPet){
+    pets.push_back(&newPet);
 }
 int Owner::petSize(){
     return pets.size();
 }
 Pet& Owner::getPet(int index){
-    return pets[index];
+    return *pets[index];
 }
-
 
 
 
@@ -198,11 +183,12 @@ class Vet : public Person{
         string professionalLicense;
         string college;
     public:
-        Vet(string, string, string, string);
+        Vet(string, string, string, string, string);
         string getProfessionalLicense();
         string getCollege();
+        void showData();
 };
-Vet::Vet(string newName, string newPhoneNumber, string newProfessionalLicense, string newCollege):Person(newName, newPhoneNumber){
+Vet::Vet(string newName, string newLastName, string newPhoneNumber, string newProfessionalLicense, string newCollege):Person(newName, newLastName, newPhoneNumber){
     professionalLicense=newProfessionalLicense;
     college=newCollege;
 }
@@ -212,6 +198,10 @@ string Vet::getProfessionalLicense(){
 string Vet::getCollege(){
     return college;
 }
+void Vet::showData(){
+    cout<<lastName<<" "<<name<<" - "<<college<<": "<<professionalLicense<<"\n";
+    cout<<"Phone: "<<phoneNumber<<"\n";
+}
 
 
 
@@ -219,42 +209,59 @@ string Vet::getCollege(){
 class Service{
     protected:
         Vet *medic;
-        Pet *customer;
+        Owner *customer;
+        Pet *patient;
         int dateDay;
         int dateMonth;
         int dateYear;
         string description;
     public:
-        Service(Vet&, Pet&);
+        Service(Vet&, Owner&, Pet&);
+        Service(Vet&, Owner&, Pet&, int[], string);
         virtual void print();
         Vet& getVet();
         Pet& getPet();
         void startingPrint(string);
         void endingPrint();
 };
-Service::Service(Vet& newMedic, Pet& newPet){
+Service::Service(Vet& newMedic, Owner& newOwner, Pet& newPet){
     Operations op=Operations();
     vector<int> dates=op.currentDate();
     dateDay=dates[0];
     dateMonth=dates[1];
     dateYear=dates[2];
     medic=&newMedic;
-    customer=&newPet;
+    customer=&newOwner;
+    patient=&newPet;
+}
+Service::Service(Vet& newMedic, Owner& newOwner, Pet& newPet, int dates[], string newDescription){
+    dateDay=dates[0];
+    dateMonth=dates[1];
+    dateYear=dates[2];
+    medic=&newMedic;
+    customer=&newOwner;
+    patient=&newPet;
+    description=newDescription;
 }
 Vet& Service::getVet(){
     return *medic;
 }
 Pet& Service::getPet(){
-    return *customer;
+    return *patient;
 }
 void Service::startingPrint(string title){
-    cout<<gfc<<title<<dateDay<<"/"<<dateMonth<<"/"<<dateYear-100<<nfc<<cnl<<cnl;
-    cout<<cfc<<"Pet: "<<nfc;
+    cout<<"Owner: ";
     customer->showData();
-    nl;
+    cout<<"\n";
+    cout<<gfc<<title<<dateDay<<"/"<<dateMonth<<"/"<<dateYear-100<<nfc<<"\n\n";
+    cout<<cfc<<"Pet: "<<nfc;
+    patient->showData();
+    cout<<"\n";
 }
 void Service::endingPrint(){
-    cout<<"Veterinary in charge: "<<medic->getName()<<" - "<<medic->getPhone()<<" | "<<medic->getCollege()<<": "<<medic->getProfessionalLicense()<<"\n\n";
+    cout<<"Veterinary in charge: ";
+    medic->showData();
+    cout<<"\n";
 }
 void Service::print(){
     cout<<"It's empty\n\n";
@@ -268,11 +275,12 @@ class MedicalCheck : public Service{
         string diagnosis;
         string treatment;
     public:
-        MedicalCheck(Vet& newMedic, Pet& newPet);
+        MedicalCheck(Vet&, Owner&, Pet&);
+        MedicalCheck(Vet&, Owner&, Pet&, int[], string, string, string);
         void print();
 };
-MedicalCheck::MedicalCheck(Vet& newMedic, Pet& newPet):Service(newMedic, newPet){
-    cout<<yfc<<"[[ MEDICAL CHECK CREATION ]]"<<nfc<<cnl;
+MedicalCheck::MedicalCheck(Vet& newMedic, Owner& newOwner, Pet& newPet):Service(newMedic, newOwner, newPet){
+    cout<<yfc<<"[[ MEDICAL CHECK CREATION ]]"<<nfc<<"\n";
     cout<<"Description of the case: ";
     cin.ignore();
     getline(cin, description);
@@ -280,7 +288,11 @@ MedicalCheck::MedicalCheck(Vet& newMedic, Pet& newPet):Service(newMedic, newPet)
     getline(cin, diagnosis);
     cout<<"Given treatment: ";
     getline(cin, treatment);
-    nl;
+    cout<<"\n";
+}
+MedicalCheck::MedicalCheck(Vet& newMedic, Owner& newOwner, Pet& newPet, int dates[], string newDescription, string newDiagnosis, string newTreatment):Service(newMedic, newOwner, newPet, dates,newDescription){
+    diagnosis=newDiagnosis;
+    treatment=newTreatment;
 }
 void MedicalCheck::print(){
     startingPrint("Medical check on ");
@@ -295,17 +307,21 @@ class Surgery : public Service{
     private:
         string postSurgeryTreatment;
     public:
-        Surgery(Vet& newMedic, Pet& newPet);
+        Surgery(Vet&, Owner&, Pet&);
+        Surgery(Vet&, Owner&, Pet&, int[], string, string);
         void print();
 };
-Surgery::Surgery(Vet& newMedic, Pet& newPet):Service(newMedic, newPet){
-    cout<<yfc<<"[[ SURGERY ENTRY CREATION ]]"<<nfc<<cnl;
+Surgery::Surgery(Vet& newMedic, Owner& newOwner, Pet& newPet):Service(newMedic, newOwner, newPet){
+    cout<<yfc<<"[[ SURGERY ENTRY CREATION ]]"<<nfc<<"\n";
     cout<<"Brief description of the surgery: ";
     cin.ignore();
     getline(cin, description);
     cout<<"Post surgery treatment: ";
     getline(cin, postSurgeryTreatment);
-    nl;
+    cout<<"\n";
+}
+Surgery::Surgery(Vet& newMedic, Owner& newOwner, Pet& newPet, int dates[], string newDescription, string newPostSurgeryTreatment):Service(newMedic, newOwner, newPet, dates, newDescription){
+    postSurgeryTreatment=newPostSurgeryTreatment;
 }
 void Surgery::print(){
     startingPrint(description+" on ");
@@ -322,11 +338,12 @@ class Grooming : public Service{
         string initialState;
         string finalState;
     public:
-        Grooming(Vet& newMedic, Pet& newPet);
+        Grooming(Vet&, Owner&, Pet&);
+        Grooming(Vet&, Owner&, Pet&, int[], string, string, string, string);
         void print();
 };
-Grooming::Grooming(Vet& newMedic, Pet& newPet):Service(newMedic, newPet){
-    cout<<yfc<<"[[  GROOMING SESSION ENTRY ]]"<<nfc<<cnl;
+Grooming::Grooming(Vet& newMedic, Owner& newOwner, Pet& newPet):Service(newMedic, newOwner, newPet){
+    cout<<yfc<<"[[  GROOMING SESSION ENTRY ]]"<<nfc<<"\n";
     cout<<"Description of the grooming order: ";
     cin.ignore();
     getline(cin, description);
@@ -336,7 +353,12 @@ Grooming::Grooming(Vet& newMedic, Pet& newPet):Service(newMedic, newPet){
     getline(cin, initialState);
     cout<<"Description on pet's appearance after session: ";
     getline(cin, finalState);
-    nl;
+    cout<<"\n";
+}
+Grooming::Grooming(Vet& newMedic, Owner& newOwner, Pet& newPet, int dates[], string newDescription, string newMaterialUsed, string newInitialState, string newFinalState):Service(newMedic, newOwner, newPet, dates, newDescription){
+    materialUsed=newMaterialUsed;
+    initialState=newInitialState;
+    finalState=newFinalState;
 }
 void Grooming::print(){
     startingPrint("Grooming on ");
@@ -356,11 +378,16 @@ class Hotel : public Service{
         int endDateMonth;
         int endDateYear;
     public:
-        Hotel(Vet& newMedic, Pet& newPet);
+        Hotel(Vet&, Owner&, Pet&);
+        Hotel(Vet&, Owner&, Pet&, int[], string, int[], int[]);
+        Hotel(Vet&, Owner&, Pet&, int[], string, int[], int[], int);
         void print();
 };
-Hotel::Hotel(Vet& newMedic, Pet& newPet):Service(newMedic, newPet){
-    cout<<yfc<<"[[ HOTEL ENTRY CREATION ]]"<<nfc<<cnl;
+Hotel::Hotel(Vet& newMedic, Owner& newOwner, Pet& newPet):Service(newMedic, newOwner, newPet){
+    cout<<yfc<<"[[ HOTEL ENTRY CREATION ]]"<<nfc<<"\n";
+    cout<<"Description of the stay: ";
+    cin.ignore();
+    getline(cin, description);
     cout<<"Start of the period:\n\tDay(0-31): ";
     cin>>startDateDay;
     cout<<"\tMonth(1-12): ";
@@ -381,9 +408,26 @@ Hotel::Hotel(Vet& newMedic, Pet& newPet):Service(newMedic, newPet){
         int index;
         cout<<"Number of cage it's going to be put in: ";
         cin>>index;
-        customer->setCage(index);
+        patient->setCage(index);
     }
-    nl;
+    cout<<"\n";
+}
+Hotel::Hotel(Vet& newMedic, Owner& newOwner, Pet& newPet, int orderDate[], string description, int startDate[], int endDate[]):Service(newMedic, newOwner, newPet, orderDate, description){
+    startDateDay=startDate[0];
+    startDateMonth=startDate[1];
+    startDateYear=startDate[2];
+    endDateDay=endDate[0];
+    endDateMonth=endDate[1];
+    endDateYear=endDate[2];
+}
+Hotel::Hotel(Vet& newMedic, Owner& newOwner, Pet& newPet, int orderDate[], string description, int startDate[], int endDate[], int newCage):Service(newMedic, newOwner, newPet, orderDate, description){
+    startDateDay=startDate[0];
+    startDateMonth=startDate[1];
+    startDateYear=startDate[2];
+    endDateDay=endDate[0];
+    endDateMonth=endDate[1];
+    endDateYear=endDate[2];
+    patient->setCage(newCage);
 }
 void Hotel::print(){
     startingPrint("Hotel entry registered ");
@@ -393,246 +437,6 @@ void Hotel::print(){
 
 
 
-class PetVetHealth{
-    private:
-        vector<MedicalCheck> rec1;
-        vector<Surgery> rec2;
-        vector<Grooming> rec3;
-        vector<Hotel> rec4;
-        vector<Service*> records; // Vector based on https://www.geeksforgeeks.org/cpp-polymorphism/
-        vector<Owner> owners;
-        vector<Vet> vets; 
-        void loadData();
-        void saveData();
-        void exit();
-        void loop();
-        void clean();
-        void addVet();
-        void addOwner();
-        void selectOwner();
-        void selectedOwner(Owner&);
-        void addPet(Owner&);
-        void selectPet(Owner&);
-        void selectedPet(Pet&);
-        Vet& selectVet();
-        bool seeRecords(Pet&);
-        vector<Service*> filterByPet(Pet&);
-    public:
-        PetVetHealth();
-        void start();
-};
-PetVetHealth::PetVetHealth(){
-    cout<<bfc<<"|| [[ THE SYSTEM HAS BEEN INITIALIZED ]] ||"<<nfc<<"\n";
-}
-void PetVetHealth::loadData(){
-    ifstream input("database.txt");
-    while(!input.is_open()){
-        cout<<"The data couldn't be loaded\nWould you like to retry? Y/N ";
-        char c; cin>>c;
-        if(c!='Y'){
-            cout<<"Exiting...";
-            abort();
-        }
-    }
-
-    input.close();
-}
-void PetVetHealth::saveData(){
-
-}
-void PetVetHealth::start(){
-    cout<<"Press ENTER to continue: ";
-    getchar();
-    clean();
-    loadData();
-    loop();
-}
-void PetVetHealth::exit(){
-
-}
-void PetVetHealth::loop(){
-    int act=1;
-    while(act!=0){
-        clean();
-        cout<<yfc<<"What would you like to do?\n"<<nfc;
-        cout<<"\t0.- Exit\n";
-        cout<<"\t1.- Add vet\n";
-        cout<<"\t2.- Add owner\n";
-        cout<<"\t3.- Select owner(add an entry, see pets, etc)\n";
-        cout<<"\nType the correspondent number: ";
-        cin>>act;
-        switch(act){
-        case 1:
-            addVet();
-            break;
-        case 2:
-            addOwner();
-            break;
-        case 3:
-            selectOwner();
-            break;
-        case 0:
-            break;
-        }
-    }
-}
-void PetVetHealth::clean(){
-#ifdef _WIN32
-    system("cls");
-#else
-    system ("clear");
-#endif
-}
-void PetVetHealth::addVet(){
-    clean();
-    cout<<yfc<<"[[ VET CREATION ]]"<<nfc<<cnl;
-    string name, phone, license, college;
-    cout<<"Name: ";
-    cin.ignore();
-    getline(cin,name);
-    cout<<"Phone number: ";
-    getline(cin,phone);
-    cout<<"Professional license: ";
-    getline(cin,license);
-    cout<<"College: ";
-    getline(cin,college);
-    vets.push_back(Vet(name, phone, license, college));
-}
-void PetVetHealth::addOwner(){
-    clean();
-    cout<<yfc<<"[[ OWNER CREATION ]]"<<nfc<<cnl;
-    string name, phone;
-    cout<<"Name: ";
-    cin.ignore();
-    getline(cin,name);
-    cout<<"Phone number: ";
-    getline(cin,phone);
-    owners.push_back(Owner(name, phone));
-}
-void PetVetHealth::selectOwner(){
-    clean();
-    cout<<yfc<<"[[ LIST OF OWNERS ]]"<<nfc<<cnl;
-    if(owners.size()==0) cout<<rfc<<"There are no owners\n"<<nfc;
-    fore(i,0,owners.size()){
-        cout<<"\t"<<i<<".- "<<owners[i].getName()<<" "<<owners[i].getPhone()<<"\n";
-    }
-    cout<<"Index of owner to select (-1 to go back): ";
-    int n=owners.size();
-    cin>>n;
-    if(n==-1) return;
-    while(n>=owners.size() || n<0){
-        cout<<"Invalid value, type again: ";
-        cin>>n;
-        if(n==-1) return;
-    }
-    selectedOwner(owners[n]);
-}
-void PetVetHealth::selectedOwner(Owner& customer){
-    int act=1;
-    while(act!=0){
-        clean();
-        cout<<yfc<<"What would you like to do?\n"<<nfc;
-        cout<<"\t0.- Return\n";
-        cout<<"\t1.- Add pet\n";
-        cout<<"\t2.- Select pet(add an entry, see data, etc)\n";
-        cout<<"\nType the correspondent number: ";
-        cin>>act;
-        switch(act){
-        case 1:
-            addPet(customer);
-            break;
-        case 2:
-            selectPet(customer);
-            break;
-        case 0:
-            break;
-        }
-    }
-}
-void PetVetHealth::addPet(Owner& customer){
-    clean();
-    customer.addPet();
-}
-void PetVetHealth::selectPet(Owner& customer){
-    clean();
-    cout<<yfc<<"[[ LIST OF PETS ]]"<<nfc<<cnl;
-    customer.showPets();
-    cout<<"Index of pet to select (-1 to go back): ";
-    int n=customer.petSize();
-    cin>>n;
-    if(n==-1) return;
-    while(n>=customer.petSize() || n<0){
-        cout<<"Invalid value, type again: ";
-        cin>>n;
-        if(n==-1) return;
-    }
-    selectedPet(customer.getPet(n));
-}
-void PetVetHealth::selectedPet(Pet& customer){
-    int act=1;
-    while(act!=0){
-        clean();
-        cout<<yfc<<"What would you like to do?\n"<<nfc;
-        cout<<"\t0.- Return\n";
-        cout<<"\t1.- Add medical check\n";
-        cout<<"\t2.- Add surgery\n";
-        cout<<"\t3.- Add grooming\n";
-        cout<<"\t4.- Add hotel\n";
-        cout<<"\t5.- See records\n";
-        cin>>act;
-        switch(act){
-        case 1:
-                rec1.push_back(MedicalCheck(selectVet(), customer));
-                records.push_back(&rec1[rec1.size()-1]);
-            break;
-        case 2:
-                rec2.push_back(Surgery(selectVet(), customer));
-                records.push_back(&rec2[rec2.size()-1]);
-            break;
-        case 3:
-                rec3.push_back(Grooming(selectVet(), customer));
-                records.push_back(&rec3[rec3.size()-1]);
-            break;
-        case 4:
-                rec4.push_back(Hotel(selectVet(), customer));
-                records.push_back(&rec4[rec4.size()-1]);
-            break;
-        case 5:
-                seeRecords(customer);
-            break;
-        case 0:
-            break;
-        }
-    }
-}
-Vet& PetVetHealth::selectVet(){
-    clean();
-    cout<<yfc<<"[[ LIST OF VETS ]]"<<nfc<<cnl;
-    if(vets.size()==0) cout<<rfc<<"There are no vets\n"<<nfc;
-    fore(i,0,vets.size()){
-        cout<<"\t"<<i<<".- "<<vets[i].getName()<<" "<<vets[i].getProfessionalLicense()<<"\n";
-    }
-    cout<<"Index of vet to select: ";
-    int n=vets.size();
-    cin>>n;
-    while(n>=vets.size() || n<0){
-        cout<<"Invalid value, type again: ";
-        cin>>n;
-    }
-    return vets[n];
-}
-bool PetVetHealth::seeRecords(Pet& customer){
-    int c=0;
-    for(Service* i:records){
-        if(&i->getPet()==&customer) i->print();
-        c++;
-    }
-    cout<<"Press ENTER to continue: ";
-    string s;
-    cin.ignore();
-    getline(cin,s);
-    return c%2;
-}
 
 
 
@@ -640,8 +444,49 @@ bool PetVetHealth::seeRecords(Pet& customer){
 
 int main(){
 
-    PetVetHealth* manager = new PetVetHealth();
-    manager->start();   
-    delete manager;
+    //Primera parte - Funcionamiento básico de clases
+    cout<<"Veterinarios:\n";
+    Vet Medico1=Vet("Juan", "Perez Perez", "442 111 1111", "1111111111", "ITESM");
+    Vet Medico2=Vet("Maria Elena", "Martinez Martinez", "442 222 2222", "22222222222", "UAQ");
+    Medico1.showData();
+    cout<<"\n";
+    Medico2.showData();
+    cout<<"\n";
 
+    cout<<"Duenos:\n";
+    Owner Dueno1=Owner("Edmundo", "Canedo Cervantes", "443 423 7305");
+    Owner Dueno2=Owner("Jose", "Garcia Garcia", "442 333 3333");
+    Dueno1.showData();
+    cout<<"\n";
+    Dueno2.showData();
+    cout<<"\n";
+
+    Pet* aux = new Pet(Pet("Mike", 1, 1, 110, "Siamese Cat")); //Eñ año 110 corresponde a 2010.
+    Dueno1.addPet(*aux);
+    aux = new Pet(Pet("Firulais", 2, 2, 105, "Street Dog", "Misses a leg")); //El año 105 corresponde a 2005
+    Dueno1.addPet(*aux);
+    aux = new Pet(Pet("Mipo", 12, 24, 122, "Hamster"));
+    Dueno1.addPet(*aux); //El año 123 corresponde a 2022
+
+    cout<<"\nMascotas del primer dueno:\n";
+    fore(i,0,Dueno1.petSize()){
+        Dueno1.getPet(i).showData();
+    }
+
+    Dueno1.getPet(2).setAnnotations("If it cannot be found search in the sawdust, he likes to hide in there");
+    cout<<"\n\nMascotas del primer dueno después de modificación:\n";
+    fore(i,0,Dueno1.petSize()){
+        Dueno1.getPet(i).showData();
+    }
+
+    aux = new Pet(Pet("Michis", 6, 6, 116, "Street Cat")); //Eñ año 116 corresponde a 2016.
+    Dueno2.addPet(*aux);
+    cout<<"\n\nMascotas del segundo dueno:\n";
+    fore(i,0,Dueno2.petSize()){
+        Dueno2.getPet(i).showData();
+    }
+
+
+    //Liberar memoria
+    for
 }
