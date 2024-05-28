@@ -3,5 +3,4 @@
 t.cpp
 *.exe
 *.out
-*.txt
 *.vscode
