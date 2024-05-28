@@ -1,4 +1,4 @@
-#include "PetVetHealth.h"
+#include "Service.h"
 using namespace std;
 
 int main(){
@@ -53,12 +53,6 @@ int main(){
         Servicios[i]->print();
         cout<<"\n";
     }
-
-    cout<<&Servicios[0]->getPet()<<"\n";
-    cout<<&Duenos[0]->getPet(0)<<"\n";
-    cout<<Duenos[0]<<"\n";
-    cout<<&Duenos<<"\n";
-
 
     //Liberar memoria
     for(Service* i:Servicios){

@@ -1,6 +1,8 @@
 #ifndef PETVETHEALTH_H
 #define PETVETHEALTH_H
 
+#include <fstream>
+#include <cstdio>
 #include "Service.h"
 
 class PetVetHealth{
@@ -23,7 +25,8 @@ class PetVetHealth{
 
 void PetVetHealth::start(){
     clear();
-    cout<<pfc<<"[[ PET VET HEALTH SYSTEM ]]"<<nfc;
+    loadData();
+    cout<<pfc<<"[[ PET VET HEALTH SYSTEM ]]\n\n"<<nfc;
     waitUser();
     loop();
     exit();
@@ -31,7 +34,9 @@ void PetVetHealth::start(){
 
 void PetVetHealth::exit(){
     writeData();
+    cout<<"Did it end up on writing?\n";
     clear();
+    cout<<"Did it did clear?";
     freeMemory();
     cout<<"Exiting...";
 }
@@ -55,7 +60,10 @@ void PetVetHealth::loadData(){
     FILE *fp=freopen("database.txt", "r", stdin);
     string s;
     while(getline(cin, s)){
-        if(s=="V"){
+        if(s=="X"){
+            break;
+        }
+        else if(s=="V"){
             string lastName, name, phoneNumber, professionalLicense, college;
             lastName=ops.getString();
             name=ops.getString();
@@ -153,6 +161,11 @@ void PetVetHealth::loadData(){
         }
     }
     fclose(fp);
+    #ifdef _WIN32
+    freopen("CON", "r", stdin);
+    #else
+    freopen("/dev/tty", "r", stdin);
+    #endif
 }
 
 void PetVetHealth::writeData(){
@@ -172,19 +185,71 @@ void PetVetHealth::writeData(){
     fore(i,0,services.size()){
         services[i]->printForDB(getIndex(services[i]->getVet(), services[i]->getOwner(), services[i]->getPet()));
     }
+    cout<<"X";
     fclose(fp);
+    #ifdef _WIN32
+    freopen("CON", "w", stdout);
+    #else
+    freopen("/dev/tty", "w", stdout);
+    #endif
 }
 
 void PetVetHealth::clear(){
 #ifdef _WIN32
-    system("cls");
+    //system("cls");
 #else
-    system ("clear");
+    //system ("clear");
 #endif
 }
 
 void PetVetHealth::loop(){
-    
+    int q=-1;
+    while(q!=0){
+        clear();
+        cout<<"What you want to do?\n";
+        cout<<"\t1.- Create a veterinary profile\n";
+        cout<<"\t2.- Create an owner profile\n";
+        cout<<"\t3.- Access an owner profile(Acces to Pets)";
+        cout<<"\t0.- Exit\n";
+        cout<<"Type the corresponding number: ";
+        q=ops.getInt(0,3);
+        switch(q){
+        case 0:
+            break;
+        case 1:
+            clear();
+            vets.push_back(new Vet);
+            break;
+        }
+    }
+}
+
+void PetVetHealth::waitUser(){
+    cout<<"Press enter to continue: ";
+    string s=ops.getString();
+}
+
+vector<int> PetVetHealth::getIndex(Vet& newVet, Owner& newOwner, Pet& newPet){
+    int a, b, c;
+    fore(i,0,vets.size()){
+        if(vets[i]==&newVet){
+            a=i;
+            break;
+        }
+    }
+    fore(i,0,owners.size()){
+        if(owners[i]==&newOwner){
+            b=i;
+            break;
+        }
+    }
+    fore(i,0,owners[b]->petSize()){
+        if(&owners[b]->getPet(i)==&newPet){
+            c=i;
+        }
+    }
+    vector<int> v={a, b, c};
+    return v;
 }
 
 #endif
