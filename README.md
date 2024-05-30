@@ -24,6 +24,6 @@ Se compila igual tanto para linux como para windows, con `g++ main.cpp`.
 
 Para correr en linux `./a.out`.
 
-Para correr en windows cmd `a.exe.`
+Para correr en windows cmd `a.exe`.
 
 Para correr en windows bash `./a.exe`.
