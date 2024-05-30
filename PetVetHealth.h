@@ -244,7 +244,7 @@ void PetVetHealth::loop(){
         cout<<"What you want to do?\n";
         cout<<"\t1.- Create a veterinary profile\n";
         cout<<"\t2.- Create an owner profile\n";
-        cout<<"\t3.- Access an owner profile(Access to Pets)";
+        cout<<"\t3.- Access an owner profile(Access to Pets)\n";
         cout<<"\t0.- Exit\n";
         cout<<"Type the corresponding number: ";
         q=ops.getInt(0,3);
