@@ -13,6 +13,7 @@ class Person{
         Person(string, string, string);
         void setNumber(string);
         string getName();
+        string getLastName();
         string getPhone();
         void showData();
         void printForDB();
@@ -40,6 +41,10 @@ void Person::setNumber(string newPhoneNumber){
 
 string Person::getName(){
     return name;
+}
+
+string Person::getLastName(){
+    return lastName;
 }
 
 string Person::getPhone(){

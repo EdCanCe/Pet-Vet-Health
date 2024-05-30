@@ -15,13 +15,13 @@ class Service{
     public:
         Service(Vet&, Owner&, Pet&);
         Service(Vet&, Owner&, Pet&, int[], string);
-        virtual void print();
+        virtual void print() = 0;
         Vet& getVet();
         Pet& getPet();
         Owner& getOwner();
         void startingPrint(string);
         void endingPrint();
-        virtual void printForDB(vector<int>);
+        virtual void printForDB(vector<int>) = 0;
         void startingPrintForDB(vector<int>, char);
 };
 
@@ -72,7 +72,7 @@ void Service::endingPrint(){
     medic->showData();
     cout<<"\n";
 }
-
+/*
 void Service::print(){
     cout<<"It's empty\n\n";
 }
@@ -80,7 +80,7 @@ void Service::print(){
 void Service::printForDB(vector<int> index){
     cout<<"It's empty\n\n";
 }
-
+*/
 void Service::startingPrintForDB(vector<int> index, char c){
     cout<<c<<"\n"<<index[0]<<"\n"<<index[1]<<"\n"<<index[2]<<"\n";
     cout<<dateDay<<"\n"<<dateMonth<<"\n"<<dateYear<<"\n"<<description<<"\n";

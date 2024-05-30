@@ -4,4 +4,75 @@ Juana
 443 111 1111
 26316261
 UAQ
+V
+Lozano
+Mariano
+443 222 2222
+3289379817
+UMSNH
+O
+Canedo
+Edmundo
+443 423 7305
+P
+Mike
+M
+14
+4
+105
+Cat
+-
+0
+O
+Perez
+Maria
+442 333 3333
+O
+Juan
+Perez
+442 4444 4444
+P
+Manny
+F
+1
+1
+101
+Dog
+-
+0
+M
+0
+0
+0
+30
+5
+124
+Presented stomach pain
+Food poisoning
+Rest
+G
+1
+0
+0
+30
+5
+124
+Cut nails and give a bath
+Shampoo
+Very nasty nails and brownish color
+Handsome pet
+H
+0
+2
+0
+30
+5
+124
+Feed 3 times a day
+30
+5
+124
+12
+6
+124
 X

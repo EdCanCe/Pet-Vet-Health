@@ -83,7 +83,6 @@ Pet::Pet(string newName, char newSex, int newBirthDay, int newBirthMonth, int ne
     birthMonth=newBirthMonth;
     birthYear=newBirthYear;
     breed=newBreed;
-    annotations="";
 }
 
 void Pet::setAnnotations(string newAnnotations){

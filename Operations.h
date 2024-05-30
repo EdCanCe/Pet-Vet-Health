@@ -21,6 +21,7 @@ class Operations{
         int getAgeDifference(vector<int>);
         int getInt();
         int getInt(int, int);
+        int getInt(string);
         string getString();
         char getChar();
         bool getYesOrNo();
@@ -51,7 +52,8 @@ int Operations::getAgeDifference(vector<int> past){
 int Operations::getInt(){
     string s;
     getline(cin, s);
-    fore(i,0,s.size()){
+    int li = s[0]=='-' ? 1 : 0;
+    fore(i,li,s.size()){
         if(s[i]<'0' || s[i]>'9'){
             cout<<"It must be a number\nTry again: ";
             cin.ignore();
@@ -60,11 +62,11 @@ int Operations::getInt(){
         }
     }
     int x=0;
-    fore(i,0,s.size()){
+    fore(i,li,s.size()){
         x*=10;
         x+=(s[i]-'0');
     }
-    return x;
+    return s[0]=='-' ? x*-1 : x;
 }
 
 int Operations::getInt(int a, int b){
@@ -74,6 +76,15 @@ int Operations::getInt(int a, int b){
     while(x<a || x>b){
         cout<<"The number must be between "<<a<<" and "<<b<<"\nTry again: ";
         x=getInt();
+    }
+    return x;
+}
+
+int Operations::getInt(string s){
+    int x=0;
+    fore(i,0,s.size()){
+        x*=10;
+        x+=(s[i]-'0');
     }
     return x;
 }
