@@ -8,7 +8,8 @@ Si lo único que se quiere hacer es probar el funcionamiento de clases se recomi
 Si se quiere ver el funcionamiento real del programa compilar y correr `main.cpp`, ya que es el verdadero programa. Se incluyeron unos pequeños datos dentro de éste para que de igual forma pueda ser probado.
 
 ## Diagrama UML
-*No se ha actualizado debido al constante cambio en clases*
+**No se ha actualizado debido al constante cambio en clases**
+
 La composición de las clases se puede ver en el siguiente diagrama:
 
 ![](UML.jpeg)
