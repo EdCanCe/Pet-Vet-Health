@@ -14,7 +14,7 @@ Pet Vet Health es un proyecto realizado en la clase TC1030. Trata sobre un siste
 
     Sin embargo, con el paso de las entregas, se terminó modificando la estructura general de las clases.
 
-    Al final se cuentan con 2 diagramas UML, el [primero(que tiene errores)]("UML.jpg"), y el [nuevo](#diagrama-uml)
+    Al final se cuentan con 2 diagramas UML, el [primero(que tiene errores)]("docs/Correcciones/oldUML.jpg"), y el [nuevo](#diagrama-uml)
 
 ## Funcionamiento
 Si lo único que se quiere hacer es probar el funcionamiento de clases se recomienda compilar y correr `test.cpp` ya que no ocupa input por parte del usuario. 
