@@ -18,7 +18,7 @@ Pet Vet Health es un proyecto realizado en la clase TC1030. Trata sobre un siste
 
  - $\color{red} \text{Herencia, Modificadores de acceso y Sobreescritura}$
 
-   Al momento de la 3ra entrega se entregó un programa el cuál no corrió. Para que corriese se ocupaba que estuviese el archivo `database.txt`, sin embargo, dentro del archivo `.gitignore` se englobaron a todos los archivos `.txt`, por esto mismo, dicho archivo no se subió, y, por ende, no se pudo compilar.
+   Al momento de la 2da entrega se entregó un programa el cuál no corrió. Para que corriese se ocupaba que estuviese el archivo `database.txt`, sin embargo, dentro del archivo `.gitignore` se englobaron a todos los archivos `.txt`, por esto mismo, dicho archivo no se subió, y, por ende, no se pudo compilar.
 
    Se eliminaron los archivos `.txt` del `.gitignore`, haciendo así que ya se pudisen subir y pudiese compilar.
 

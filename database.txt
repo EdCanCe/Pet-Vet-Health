@@ -11,6 +11,14 @@ Mariano
 3289379817
 UMSNH
 O
+Aguado
+Adrian
+442 111 1111
+O
+Lopez
+Daniel
+442 999 9999
+O
 Canedo
 Edmundo
 443 423 7305
@@ -23,6 +31,10 @@ M
 Cat
 -
 0
+O
+Dolores
+Juan Carlos
+442 555 5555
 O
 Perez
 Maria
@@ -42,7 +54,7 @@ Dog
 0
 M
 0
-0
+2
 0
 30
 5
@@ -52,7 +64,7 @@ Food poisoning
 Rest
 G
 1
-0
+2
 0
 30
 5
@@ -63,7 +75,7 @@ Very nasty nails and brownish color
 Handsome pet
 H
 0
-2
+5
 0
 30
 5

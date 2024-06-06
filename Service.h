@@ -23,6 +23,7 @@ class Service{
         void endingPrint();
         virtual void printForDB(vector<int>) = 0;
         void startingPrintForDB(vector<int>, char);
+        virtual void printHTML() = 0;
 };
 
 Service::Service(Vet& newMedic, Owner& newOwner, Pet& newPet){
@@ -72,15 +73,7 @@ void Service::endingPrint(){
     medic->showData();
     cout<<"\n";
 }
-/*
-void Service::print(){
-    cout<<"It's empty\n\n";
-}
 
-void Service::printForDB(vector<int> index){
-    cout<<"It's empty\n\n";
-}
-*/
 void Service::startingPrintForDB(vector<int> index, char c){
     cout<<c<<"\n"<<index[0]<<"\n"<<index[1]<<"\n"<<index[2]<<"\n";
     cout<<dateDay<<"\n"<<dateMonth<<"\n"<<dateYear<<"\n"<<description<<"\n";
@@ -98,6 +91,7 @@ class MedicalCheck : public Service{
         MedicalCheck(Vet&, Owner&, Pet&, int[], string, string, string);
         void print();
         void printForDB(vector<int>);
+        void printHTML();
 };
 
 MedicalCheck::MedicalCheck(Vet& newMedic, Owner& newOwner, Pet& newPet):Service(newMedic, newOwner, newPet){
@@ -127,6 +121,37 @@ void MedicalCheck::printForDB(vector<int> index){
     cout<<diagnosis<<"\n"<<treatment<<"\n";
 }
 
+void MedicalCheck::printHTML(){
+    string date=to_string(dateDay)+"-"+to_string(dateMonth)+"-"+to_string(dateMonth);
+    vector<int> time=ops.currentTime();
+    string hour=date+"-"+to_string(time[0])+"-"+to_string(time[1])+"-"+to_string(time[2]);
+    string nameFile="records/"+hour+"-MedicalCheck-"+patient->getName()+"-"+customer->getLastName()+"-"+customer->getName()+".html";
+    ofstream output(nameFile);
+
+    output<<"<head>\n";
+    output<<"<title>Medical Check</title>\n";
+    output<<"<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n";
+    output<<"</head>\n";
+    output<<"<body><div class=\"MainBody\">\n";
+    output<<"<h1>Medical check</h1>\n";
+
+    output<<"<script src=\"script.js\"></script>";
+    output<<"</div></body>";
+
+    output.close();
+
+    string command;
+    #ifdef _WIN32
+    command = "start "+nameFile; // Para Windows
+    #elif __APPLE__
+    command = "open "+nameFile;  // Para macOS
+    #elif __linux__
+    command = "xdg-open "+nameFile; // Para Linux
+    #endif
+    system(command.c_str());
+
+}
+
 
 
 
@@ -138,6 +163,7 @@ class Surgery : public Service{
         Surgery(Vet&, Owner&, Pet&, int[], string, string);
         void print();
         void printForDB(vector<int>);
+        void printHTML();
 };
 
 Surgery::Surgery(Vet& newMedic, Owner& newOwner, Pet& newPet):Service(newMedic, newOwner, newPet){
@@ -164,6 +190,26 @@ void Surgery::printForDB(vector<int> index){
     cout<<postSurgeryTreatment<<"\n";
 }
 
+void Surgery::printHTML(){
+    string date=to_string(dateDay)+"-"+to_string(dateMonth)+"-"+to_string(dateMonth);
+    string nameFile="records/"+date+"-Surgery-"+patient->getName()+"-"+customer->getLastName()+"-"+customer->getName()+".html";
+    ofstream output(nameFile);
+
+    output<<"<h1>Medical check</h1>";
+
+    output.close();
+
+    string command;
+    #ifdef _WIN32
+    command = "start "+nameFile; // Para Windows
+    #elif __APPLE__
+    command = "open "+nameFile;  // Para macOS
+    #elif __linux__
+    command = "xdg-open "+nameFile; // Para Linux
+    #endif
+    system(command.c_str());
+}
+
 
 
 
@@ -177,6 +223,7 @@ class Grooming : public Service{
         Grooming(Vet&, Owner&, Pet&, int[], string, string, string, string);
         void print();
         void printForDB(vector<int> index);
+        void printHTML();
 };
 
 Grooming::Grooming(Vet& newMedic, Owner& newOwner, Pet& newPet):Service(newMedic, newOwner, newPet){
@@ -209,6 +256,26 @@ void Grooming::printForDB(vector<int> index){
     cout<<materialUsed<<"\n"<<initialState<<"\n"<<finalState<<"\n";
 }
 
+void Grooming::printHTML(){
+    string date=to_string(dateDay)+"-"+to_string(dateMonth)+"-"+to_string(dateMonth);
+    string nameFile="records/"+date+"-Grooming-"+patient->getName()+"-"+customer->getLastName()+"-"+customer->getName()+".html";
+    ofstream output(nameFile);
+
+    output<<"<h1>Medical check</h1>";
+
+    output.close();
+
+    string command;
+    #ifdef _WIN32
+    command = "start "+nameFile; // Para Windows
+    #elif __APPLE__
+    command = "open "+nameFile;  // Para macOS
+    #elif __linux__
+    command = "xdg-open "+nameFile; // Para Linux
+    #endif
+    system(command.c_str());
+}
+
 
 
 
@@ -226,6 +293,7 @@ class Hotel : public Service{
         Hotel(Vet&, Owner&, Pet&, int[], string, int[], int[], int);
         void print();
         void printForDB(vector<int>);
+        void printHTML();
 };
 
 Hotel::Hotel(Vet& newMedic, Owner& newOwner, Pet& newPet):Service(newMedic, newOwner, newPet){
@@ -284,6 +352,26 @@ void Hotel::printForDB(vector<int> index){
     startingPrintForDB(index, 'H');
     cout<<startDateDay<<"\n"<<startDateMonth<<"\n"<<startDateYear<<"\n";
     cout<<endDateDay<<"\n"<<endDateMonth<<"\n"<<endDateYear<<"\n";  
+}
+
+void Hotel::printHTML(){
+    string date=to_string(dateDay)+"-"+to_string(dateMonth)+"-"+to_string(dateMonth);
+    string nameFile="records/"+date+"-Hotel-"+patient->getName()+"-"+customer->getLastName()+"-"+customer->getName()+".html";
+    ofstream output(nameFile);
+
+    output<<"<h1>Medical check</h1>";
+
+    output.close();
+
+    string command;
+    #ifdef _WIN32
+    command = "start "+nameFile; // Para Windows
+    #elif __APPLE__
+    command = "open "+nameFile;  // Para macOS
+    #elif __linux__
+    command = "xdg-open "+nameFile; // Para Linux
+    #endif
+    system(command.c_str());
 }
 
 #endif

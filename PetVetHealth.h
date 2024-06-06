@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <cstdio>
+#include <algorithm>
 #include "Service.h"
 
 class PetVetHealth{
@@ -200,6 +201,18 @@ void PetVetHealth::loadData(){
         }
     }
     inputFile.close(); 
+    sort(vets.begin(), vets.end(), [](Vet* a, Vet* b){
+        if(a->getLastName() == b->getLastName()){
+            return a->getLastName() < b->getLastName();
+        }
+        return a->getName() < b->getName();
+    });
+    sort(owners.begin(), owners.end(), [](Owner* a, Owner* b){
+        if(a->getLastName() == b->getLastName()){
+            return a->getLastName() < b->getLastName();
+        }
+        return a->getName() < b->getName();
+    });
 }
 
 void PetVetHealth::writeData(){
@@ -221,6 +234,7 @@ void PetVetHealth::writeData(){
     }
     cout<<"X";
     fclose(fp);
+    delete fp;
     #ifdef _WIN32
     freopen("CON", "w", stdout);
     #else
@@ -254,10 +268,22 @@ void PetVetHealth::loop(){
         case 1:
             clear();
             vets.push_back(new Vet);
+            sort(vets.begin(), vets.end(), [](Vet* a, Vet* b){
+                if(a->getLastName() == b->getLastName()){
+                    return a->getLastName() < b->getLastName();
+                }
+                return a->getName() < b->getName();
+            });
             break;
         case 2:
             clear();
             owners.push_back(new Owner);
+            sort(owners.begin(), owners.end(), [](Owner* a, Owner* b){
+                if(a->getLastName() == b->getLastName()){
+                    return a->getLastName() < b->getLastName();
+                }
+                return a->getName() < b->getName();
+            });
             break;
         case 3:
             clear();
@@ -306,7 +332,7 @@ void PetVetHealth::showOwners(){
         cout<<"\t"<<i<<".- "<<owners[i]->getLastName()<<" "<<owners[i]->getName()<<": "<<owners[i]->getPhone()<<"\n";
     }
     cout<<"\t Type \"-1\" to go back\n";
-    cout<<"\t Type \"0 - "<<owners.size()-1<<"\" to access that owner's index\n";
+    cout<<"\t Type from 0 - "<<owners.size()-1<<" to access that owner's index\n";
     cout<<"\nWhat you want to do? \n";
     int q=ops.getInt(-1, owners.size()-1);
     if(q==-1) return;
@@ -352,7 +378,7 @@ void PetVetHealth::showPets(int index){
         cout<<"\t"<<i<<".- "<<owners[index]->getPet(i).getName()<<"\n";
     }
     cout<<"\t Type \"-1\" to go back\n";
-    cout<<"\t Type \"0 - "<<owners[index]->petSize()-1<<"\" to access that pet's index\n";
+    cout<<"\t Type from 0 - "<<owners[index]->petSize()-1<<" to access that pet's index\n";
     cout<<"\nWhat you want to do? \n";
     int q=ops.getInt(-1, owners[index]->petSize()-1);
     if(q==-1) return;
@@ -418,7 +444,7 @@ int PetVetHealth::showVets(){
     fore(i,0,vets.size()){
         cout<<"\t"<<i<<".- "<<vets[i]->getLastName()<<" "<<vets[i]->getName()<<": "<<vets[i]->getCollege()<<"\n";
     }
-    cout<<"\t Type \"0 - "<<vets.size()-1<<"\" to access that vets's index\n";
+    cout<<"\t Type from 0 - "<<vets.size()-1<<" to access that vets's index\n";
     cout<<"\nWhat vet is doing this service? \n";
     int q=ops.getInt(0, vets.size()-1);
     return q;
@@ -438,10 +464,18 @@ void PetVetHealth::showRecords(Pet& patient){
         return;
     }
     fore(i,0,filteredServices.size()){
+        cout<<yfc<<"Entry number: "<<i<<"\n"<<nfc;
         filteredServices[i]->print();
         cout<<"\n";
         if((i+1)<filteredServices.size()) cout<<rfc<<" - - - - - - - \n\n\n"<<nfc;
     }
+
+    cout<<"\t Type \"-1\" to go back\n";
+    cout<<"\t Type from 0 - "<<filteredServices.size()-1<<" to get the corresponding html for that entry\n";
+    cout<<"What do you want to do?\n";
+    int q=ops.getInt(-1,filteredServices.size()-1);
+    if(q==-1) return;
+    filteredServices[q]->printHTML();
     waitUser();
 }
 

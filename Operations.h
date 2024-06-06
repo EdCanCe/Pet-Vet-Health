@@ -18,6 +18,7 @@ class Operations{
     public:
         Operations();
         vector<int> currentDate();
+        vector<int> currentTime();
         int getAgeDifference(vector<int>);
         int getInt();
         int getInt(int, int);
@@ -38,6 +39,18 @@ vector<int> Operations::currentDate(){
     int month=timeinfo->tm_mon+1;
     int day=timeinfo->tm_mday;
     return {day, month, year};
+}
+
+vector<int> Operations::currentTime(){
+    //Portion of code based on https://cplusplus.com/reference/ctime/localtime/
+    time_t rawtime;
+    struct tm * timeinfo;
+    time (&rawtime);
+    timeinfo=localtime(&rawtime);
+    int hour=timeinfo->tm_hour;
+    int min=timeinfo->tm_min;
+    int seg=timeinfo->tm_sec;
+    return {hour, min, seg};
 }
 
 int Operations::getAgeDifference(vector<int> past){
