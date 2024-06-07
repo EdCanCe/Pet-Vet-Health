@@ -28,10 +28,20 @@ h1{
     text-align: center;
 }
 
+h2{
+    margin-top: 0.3cm;
+    margin-bottom: 0;
+}
+
+p{
+    margin-top: 0;
+}
+
 .date{
     text-align: right;
     margin-right: -1.3cm;
     opacity: 0.6;
+    margin-top: 0.5cm;
 }
 
 .foot{
@@ -48,4 +58,8 @@ h1{
     transform: translateX(-50%);
     width: 10cm;
     border-bottom: 1px solid black;
+}
+
+.PetData{
+    margin: 0 1cm;
 }

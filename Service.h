@@ -135,11 +135,11 @@ void MedicalCheck::printHTML(){
     output<<"<body><div class=\"MainBody\">\n";
     output<<"<p class=\"date\">"<<dateDay<<"/"<<dateMonth<<"/"<<dateYear<<"</p>\n";
     output<<"<h1>Medical check</h1>\n";
-    output<<"<h2>Pet data:</h2>";
-    output<<"<p>Name: "<<patient->getName()<<"</p>\n";
-    output<<"<p>Breed: "<<patient->getBreed()<<"</p>\n";
-    output<<"<p>Age: "<<ops.getAgeDifference(patient->getBirth())<<"</p>\n";
-    output<<"<p>Annotations: "<<patient->getAnnotations()<<"</p>\n";
+    output<<"<h2>Pet data:</h2>\n";
+    output<<"<p class=\"PetData\">Name: "<<patient->getName()<<"</p>\n";
+    output<<"<p class=\"PetData\">Breed: "<<patient->getBreed()<<"</p>\n";
+    output<<"<p class=\"PetData\">Age: "<<ops.getAgeDifference(patient->getBirth())<<"</p>\n";
+    output<<"<p class=\"PetData\">Annotations: "<<patient->getAnnotations()<<"</p>\n";
 
     output<<"<h2>Description: </h2>\n";
     output<<"<p>"<<description<<"</p>\n";
