@@ -125,7 +125,7 @@ void MedicalCheck::printHTML(){
     string date=to_string(dateDay)+"-"+to_string(dateMonth)+"-"+to_string(dateMonth);
     vector<int> time=ops.currentTime();
     string hour=date+"-"+to_string(time[0])+"-"+to_string(time[1])+"-"+to_string(time[2]);
-    string nameFile="records/"+hour+"-MedicalCheck-"+patient->getName()+"-"+customer->getLastName()+"-"+customer->getName()+".html";
+    string nameFile="Records/"+hour+"-MedicalCheck-"+patient->getName()+"-"+customer->getLastName()+"-"+customer->getName()+".html";
     ofstream output(nameFile);
 
     output<<"<head>\n";
@@ -133,11 +133,26 @@ void MedicalCheck::printHTML(){
     output<<"<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n";
     output<<"</head>\n";
     output<<"<body><div class=\"MainBody\">\n";
+    output<<"<p class=\"date\">"<<dateDay<<"/"<<dateMonth<<"/"<<dateYear<<"</p>\n";
     output<<"<h1>Medical check</h1>\n";
+    output<<"<h2>Pet data:</h2>";
+    output<<"<p>Name: "<<patient->getName()<<"</p>\n";
+    output<<"<p>Breed: "<<patient->getBreed()<<"</p>\n";
+    output<<"<p>Age: "<<ops.getAgeDifference(patient->getBirth())<<"</p>\n";
+    output<<"<p>Annotations: "<<patient->getAnnotations()<<"</p>\n";
 
+    output<<"<h2>Description: </h2>\n";
+    output<<"<p>"<<description<<"</p>\n";
+
+    output<<"<h2>Diagnosis: </h2>\n";
+    output<<"<p>"<<diagnosis<<"</p>\n";
+
+    output<<"<h2>Treatment: </h2>\n";
+    output<<"<p>"<<treatment<<"</p>\n";
+
+    output<<"<p class=\"foot\">"<<medic->getLastName()<<" "<<medic->getName()<<" - "<<medic->getProfessionalLicense()<<"</p>\n";
     output<<"<script src=\"script.js\"></script>";
     output<<"</div></body>";
-
     output.close();
 
     string command;

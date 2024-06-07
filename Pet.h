@@ -12,16 +12,17 @@ class Pet{
         int birthYear;
         string breed;
         string annotations="-"; // Any allergies, etc.
-        vector<int> getBirth();
         int cage=0; // In case the pet stays in the veterinary, cage assigns the cage where the pet was put in.
     public:
         Pet();
         Pet(string, char, int, int, int, string, string, int);
         Pet(string, char, int, int, int, string, string);
         Pet(string, char, int, int, int, string);
+        vector<int> getBirth();
         void setAnnotations(string);
         void setCage(int);
         string getName(); //Used when owner selects which pet is being treated
+        string getBreed();
         string getAnnotations();
         int getCage();
         void showData();
@@ -95,6 +96,10 @@ void Pet::setCage(int index){
 
 string Pet::getName(){
     return name;
+}
+
+string Pet::getBreed(){
+    return breed;
 }
 
 vector<int> Pet::getBirth(){
