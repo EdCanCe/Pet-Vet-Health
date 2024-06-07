@@ -7,10 +7,10 @@ Pet Vet Health es un proyecto realizado en la clase TC1030. Trata sobre un siste
  - [Inicio](#pet-vet-health)
  - [Correciones realizadas](#correcciones-realizadas)
  - [Funcionamiento](#funcionamiento)
- - [Diagrama UML]
- - [Casos en los que dejaría de funcionar]
- - [Como correr el programa]
- - [Capturas del funcionamiento]
+ - [Diagrama UML](#diagrama-uml)
+ - [Casos en los que dejaría de funcionar](#aspectos-que-pueden-afectar-que-deje-de-funcionar)
+ - [Como correr el programa](#como-correr-el-programa)
+ - [Capturas del funcionamiento](#capturas-del-funcionamiento-del-programa)
 
 ## Correcciones realizadas
 

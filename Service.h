@@ -150,7 +150,8 @@ void MedicalCheck::printHTML(){
     output<<"<h2>Treatment: </h2>\n";
     output<<"<p>"<<treatment<<"</p>\n";
 
-    output<<"<p class=\"foot\">"<<medic->getLastName()<<" "<<medic->getName()<<" - "<<medic->getProfessionalLicense()<<"</p>\n";
+    output<<"<p class=\"line\"></p>";
+    output<<"<p class=\"foot\">"<<medic->getProfessionalLicense()<<" - "<<medic->getLastName()<<"  "<<medic->getName()<<"'s sign</p>\n";
     output<<"<script src=\"script.js\"></script>";
     output<<"</div></body>";
     output.close();
