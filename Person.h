@@ -1,13 +1,27 @@
+/*
+*
+* Pet Vet Health Proyect - Person Class
+* A01645576
+* 07/06/2024
+* This class contains the data of a person. It has the child
+* classes Vet and Owner.
+*
+*/
 #ifndef PERSON_H
 #define PERSON_H
 
 #include "Pet.h"
 
+//Declaration of person class
+//Since it doesn't use polymorphism it's not needed to make it abstract
 class Person{
+    //Declaration of protected attributes
     protected:
         string name;
         string lastName;
         string phoneNumber;
+
+    //Declaration of public methods
     public:
         Person();
         Person(string, string, string);

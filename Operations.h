@@ -26,6 +26,7 @@
 #define nfc "\033[0m"
 using namespace std;
 
+//Declaration of Operations class
 class Operations{
     //Since it only has methods, there is no reason to have private attributes.
 
@@ -43,15 +44,27 @@ class Operations{
         bool getYesOrNo();
 };
 
-/*
-* Operations is the constructor of this object
-*
-* Constructs the object
-*
-* @param
-* @return Operations object
-*/
+/**
+ * Operations is the constructor of this object.
+ *
+ * It constructs the object
+ *
+ * @param
+ * @return Operations object
+ */
 Operations::Operations(){}
+
+/**
+ * Returns the current date.
+ * 
+ * Get's the current values of the day, month and
+ * year. It returns it in the form of a vector. The
+ * year starts at 0 meaning 1900.
+ * 
+ * @param 
+ * 
+ * @return vector<int> having day, month and year in that order
+ */
 vector<int> Operations::currentDate(){
     //Portion of code based on https://cplusplus.com/reference/ctime/localtime/
     time_t rawtime;
@@ -64,6 +77,16 @@ vector<int> Operations::currentDate(){
     return {day, month, year};
 }
 
+/**
+ * Returns the current time.
+ * 
+ * Get's the current values of the hour, minute and
+ * second. It returns it in the form of a vector.
+ * 
+ * @param
+ * 
+ * @return vector<int> - Having hour, minute and second in that order
+ */
 vector<int> Operations::currentTime(){
     //Portion of code based on https://cplusplus.com/reference/ctime/localtime/
     time_t rawtime;
@@ -76,6 +99,17 @@ vector<int> Operations::currentTime(){
     return {hour, min, seg};
 }
 
+/**
+ * Returns the age difference between two dates.
+ * 
+ * By substrating the years and checking if the month and/or already
+ * passed, it calculates the age difference between two different
+ * dates.
+ * 
+ * @param vector<int> past Having the day, month and year in that order.
+ * 
+ * @return int - The age difference in years.
+ */
 int Operations::getAgeDifference(vector<int> past){
     vector<int> current=currentDate();
     int age=current[2]-past[2];
@@ -85,6 +119,20 @@ int Operations::getAgeDifference(vector<int> past){
     return age;
 }
 
+/**
+ * Gets an integer with user input.
+ * 
+ * By reading and validating strings given as an input by the user it
+ * checks if it can be used as an integer to be able to return it. It
+ * does this by looping the string and validating each character. In
+ * case it's not validated it asks for another input. When it's 
+ * confirmed it's a number is passed on to another loop to make it
+ * an integer. Then checks if it's a negative number to make it one.
+ * 
+ * @param 
+ * 
+ * @return int - The integer the user gave as input.
+ */
 int Operations::getInt(){
     string s;
     getline(cin, s);
@@ -94,7 +142,8 @@ int Operations::getInt(){
         if(s[i]<'0' || s[i]>'9'){
             cout<<"It must be a number\nTry again: ";
             getline(cin, s);
-            i=li;
+            li = s[0]=='-' ? 1 : 0;
+            i=li-1;
             x=s.size();
         }
     }
@@ -106,6 +155,17 @@ int Operations::getInt(){
     return s[0]=='-' ? x*-1 : x;
 }
 
+/**
+ * Gets an integer between two different numbers.
+ * 
+ * This method overloads getInt(). Using that method it gets an
+ * integer, then checks if it's between the given range. In case
+ * it's not it asks again for another number.
+ * 
+ * @param 
+ * 
+ * @return int - The integer the user gave as input.
+ */
 int Operations::getInt(int a, int b){
     if(a>b) swap(a,b);
     int x;
@@ -117,6 +177,16 @@ int Operations::getInt(int a, int b){
     return x;
 }
 
+/**
+ * Gets an integer with a string.
+ * 
+ * This method overloads getInt(). Given a string it loops through
+ * it to make an integer out of it.
+ * 
+ * @param 
+ * 
+ * @return int - The integer the user gave as input.
+ */
 int Operations::getInt(string s){
     int x=0;
     fore(i,0,s.size()){
@@ -126,12 +196,32 @@ int Operations::getInt(string s){
     return x;
 }
 
+/**
+ * Gets a string with user input.
+ * 
+ * Using getline() gets a string.
+ * 
+ * @param 
+ * 
+ * @return string - The string the user gave as input
+ */
 string Operations::getString(){
     string s;
     getline(cin, s);
     return s;
 }
 
+/**
+ * Gets a character with user input
+ * 
+ * By using getString() gets a string with user input. Then it
+ * loops if it's not a single character until only one character
+ * is given as the input. Then it returns that character.
+ * 
+ * @param 
+ * 
+ * @return char - The character the user gave as input.
+ */
 char Operations::getChar(){
     string s;
     s=getString();
@@ -142,6 +232,18 @@ char Operations::getChar(){
     return s[0];
 }
 
+/**
+ * Gets a bool meaning a yes or a no.
+ * 
+ * It uses getChar() to get a character, then checks if its a 'Y'
+ * or a 'N'. In case not it asks again in a loop until it is given
+ * one character with those restrictions. If the character is a 'Y' it
+ * returns true, if it's 'N' it returns false.
+ * 
+ * @param 
+ * 
+ * @return bool - A true if is a yes and a false if is a no.
+ */
 bool Operations::getYesOrNo(){
     char q=getChar();
     while(!(q=='Y' || q=='N')){
@@ -151,6 +253,7 @@ bool Operations::getYesOrNo(){
     return q=='Y';
 }
 
+//Creates an operations object that will be used throughout the classes.
 Operations ops;
 
 #endif

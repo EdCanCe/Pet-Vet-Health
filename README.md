@@ -43,8 +43,6 @@ Con los perfiles hechos, se pueden realizar servicios a dichas mascotas, dentro 
 
 Al final, con los servicios hechos, se pueden imprimir de 2 maneras, una de éstas siendo una impresión simple en consola, mientras que si se busca imprimir dicho servicio como una orden en PDF, se genera un archivo `.html` que se abre automáticamente, dentro de ahí el archivo `.js` hará que se "imprima" el documento, los navegadores permiten guardar como PDF envés de imprimir, lo cual permitiría generar un PDF del mismo. Se decidió de hacer de esta manera para que no se tuvieran que implementar librerías externas y directamente se abra en el navegador del usuario.
 
-Para la generación de PDF se recomienda desactivar la función de márgenes dentro de el apartado de imprimir en el navegador. También se recomienda activar el apartado de los gráficos de fondo. La escala se recomienda dejarla por defecto.
-
 Si lo único que se quiere hacer es probar el funcionamiento de clases se recomienda compilar y correr `test.cpp` ya que no ocupa input por parte del usuario. 
 
 Si se quiere ver el funcionamiento real del programa compilar y correr `main.cpp`, ya que es el verdadero programa. Se incluyeron unos pequeños datos dentro de éste para que de igual forma pueda ser probado.
@@ -59,7 +57,7 @@ La documentación en general está comentada en el código, pero también puede 
 
 Al programa se le implementó un sistema en el cual recibe strings de entrada, y luego éstas son convertidas a enteros en caso de ser necesario, por lo mismo, las entradas del usuario no harían que el programa deje de funcionar.
 
-Sin embargo, si al archivo `database.txt` se ve corrompido o no existe, podría hacer que el programa no funcione, ya que al iniciar la ejecución del programa éste mismo trata de abrir dicho archivo para obtener los datos que se le han ido ingresando conforme el paso del tiempo.
+Sin embargo, si al archivo `database.txt` se ve corrompido o no existe, podría hacer que el programa no funcione, ya que al iniciar la ejecución del programa éste mismo trata de abrir dicho archivo para obtener los datos que se le han ido ingresando conforme el paso del tiempo. Por lo mismo, se recomienda no forzar el cierre del programa de forma abrupta (por ejemplo usar `ctrl+c`) ya que podría dejar el archivo en blanco.
 
 El programa utiliza vectores, por lo mismo, se ocuparía una versión de C++ que contenga dicha biblioteca. En caso de no tenerla podría ocasionar que el programa no compile.
 
@@ -71,11 +69,15 @@ Hay otro caso en donde no sería tal cual que deje de funcionar, sin embargo, po
 
 De la misma manera, el archivo `.css` utiliza una fuente de [Google fonts](https://fonts.google.com/), por lo que si no se cuenta con internet, sí se podrá imprimir, pero, no se vería como se tenía planeado.
 
+Para poder visualizar todo de mejor manera se utilizan secuencias de colores ANSI. En caso de que la consola donde se corra el programa no permita la correcta visualización de dichas secuencias, entonces se verían dichas secuencias tal cual envés de aplicarles el color correspondiente.
+
 ## Como correr el programa
 
 En la terminal ubicarse en el directorio de la carpeta.
 
-Se compila igual tanto para linux como para windows, con: `g++ main.cpp`.
+Se compila igual tanto para linux como para windows, con: `g++ main.cpp`. 
+
+Ocupa el uso de vectores, por lo mismo, si marca muchos errores podría ser la versión de g++ usada. En caso de ser así intentar compilar con `g++ -std=c++17 main.cpp`.
 
 Para correr en linux: `./a.out`.
 
@@ -83,5 +85,6 @@ Para correr en windows con cmd: `a.exe`.
 
 Para correr en windows con bash: `./a.exe`.
 
+Para la generación de PDF se recomienda desactivar la función de márgenes dentro de el apartado de imprimir en el navegador. También se recomienda activar el apartado de los gráficos de fondo. La escala se recomienda dejarla por defecto.
 
 ## Capturas del funcionamiento del programa
