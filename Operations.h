@@ -1,3 +1,15 @@
+/*
+*
+* Pet Vet Health Proyect - Operations Class
+* A01645576
+* 07/06/2024
+* This class is used by other classes to do certain
+* operations, just as the name says.
+* Mainly the operations are to control user input and
+* prevent they enter something that they weren't asked for
+*
+*/
+
 #ifndef OPERATIONS_H
 #define OPERATIONS_H
 
@@ -15,6 +27,9 @@
 using namespace std;
 
 class Operations{
+    //Since it only has methods, there is no reason to have private attributes.
+
+    //Declaration of the methods Operations will have
     public:
         Operations();
         vector<int> currentDate();
@@ -28,6 +43,14 @@ class Operations{
         bool getYesOrNo();
 };
 
+/*
+* Operations is the constructor of this object
+*
+* Constructs the object
+*
+* @param
+* @return Operations object
+*/
 Operations::Operations(){}
 vector<int> Operations::currentDate(){
     //Portion of code based on https://cplusplus.com/reference/ctime/localtime/
@@ -66,15 +89,16 @@ int Operations::getInt(){
     string s;
     getline(cin, s);
     int li = s[0]=='-' ? 1 : 0;
-    fore(i,li,s.size()){
+    int x=s.size();
+    for(int i=li; i<x; i++){
         if(s[i]<'0' || s[i]>'9'){
             cout<<"It must be a number\nTry again: ";
-            cin.ignore();
             getline(cin, s);
-            i=0;
+            i=li;
+            x=s.size();
         }
     }
-    int x=0;
+    x=0;
     fore(i,li,s.size()){
         x*=10;
         x+=(s[i]-'0');

@@ -203,15 +203,15 @@ void PetVetHealth::loadData(){
     inputFile.close(); 
     sort(vets.begin(), vets.end(), [](Vet* a, Vet* b){
         if(a->getLastName() == b->getLastName()){
-            return a->getLastName() < b->getLastName();
+            return a->getName() < b->getName();
         }
-        return a->getName() < b->getName();
+        return a->getLastName() < b->getLastName();
     });
     sort(owners.begin(), owners.end(), [](Owner* a, Owner* b){
         if(a->getLastName() == b->getLastName()){
-            return a->getLastName() < b->getLastName();
+            return a->getName() < b->getName();
         }
-        return a->getName() < b->getName();
+        return a->getLastName() < b->getLastName();
     });
 }
 
@@ -270,9 +270,9 @@ void PetVetHealth::loop(){
             vets.push_back(new Vet);
             sort(vets.begin(), vets.end(), [](Vet* a, Vet* b){
                 if(a->getLastName() == b->getLastName()){
-                    return a->getLastName() < b->getLastName();
+                    return a->getName() < b->getName();
                 }
-                return a->getName() < b->getName();
+                return a->getLastName() < b->getLastName();
             });
             break;
         case 2:
@@ -398,7 +398,7 @@ void PetVetHealth::goToPet(int ownerIndex, int petIndex){
         cout<<"\t2.- Add a surgery to this pet\n";
         cout<<"\t3.- Add a grooming session to this pet\n";
         cout<<"\t4.- Add a hotel entry linked to this pet\n";
-        cout<<"\t5.- View this pet's records\n";
+        cout<<"\t5.- View this pet's records(get their HTML)\n";
         if(cage) cout<<"\t6.- Give the pet to it's owner\n";
         cout<<"\t0.- Go back\n";
         cout<<"Type the corresponding number: ";
@@ -435,6 +435,12 @@ void PetVetHealth::goToPet(int ownerIndex, int petIndex){
             clear();
             owners[ownerIndex]->getPet(petIndex).setCage(0);
             break;
+        }
+        if(q<=4 && q>=1){
+            services[services.size()-1]->print();
+            cout<<"Would you like to generate it's HTML right now? (Y=Yes, N=No) ";
+            if(ops.getYesOrNo()) services[services.size()-1]->printHTML();
+            waitUser();
         }
     }
 }

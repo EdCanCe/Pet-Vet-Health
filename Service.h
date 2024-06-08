@@ -24,6 +24,8 @@ class Service{
         virtual void printForDB(vector<int>) = 0;
         void startingPrintForDB(vector<int>, char);
         virtual void printHTML() = 0;
+        void startingHTML(ofstream&, string);
+        void endingHTML(ofstream&, string);
 };
 
 Service::Service(Vet& newMedic, Owner& newOwner, Pet& newPet){
@@ -79,6 +81,48 @@ void Service::startingPrintForDB(vector<int> index, char c){
     cout<<dateDay<<"\n"<<dateMonth<<"\n"<<dateYear<<"\n"<<description<<"\n";
 }
 
+void Service::startingHTML(ofstream& output, string serviceName){
+    output<<"<head>\n";
+    output<<"<title>"<<serviceName<<"</title>\n";
+    output<<"<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n";
+    output<<"</head>\n";
+    output<<"<body><div class=\"MainBody\">\n";
+    output<<"<p class=\"date\">"<<dateDay<<"/"<<dateMonth<<"/"<<dateYear+1900<<"</p>\n";
+    output<<"<h1>"<<serviceName<<"</h1>\n";
+    output<<"<div class=\"MainData\">\n";
+    output<<"<div class=\"PetData\">\n";
+    output<<"<h2>Pet data:</h2>\n";
+    output<<"<p>Name: "<<patient->getName()<<"</p>\n";
+    output<<"<p>Breed: "<<patient->getBreed()<<"</p>\n";
+    output<<"<p>Age: "<<ops.getAgeDifference(patient->getBirth())<<"</p>\n";
+    output<<"</div>\n";
+    output<<"<div class=\"OwnerData\">\n";
+    output<<"<h2>Owner data:</h2>\n";
+    output<<"<p>Name: "<<customer->getName()<<"</p>\n";
+    output<<"<p>Last name: "<<customer->getLastName()<<"</p>\n";
+    output<<"<p>Phone number: "<<customer->getPhone()<<"</p>\n";
+    output<<"</div></div>";
+    output<<"<p>Annotations: "<<patient->getAnnotations()<<"</p>\n";
+}
+
+void Service::endingHTML(ofstream& output, string nameFile){
+    output<<"<p class=\"line\"></p>";
+    output<<"<p class=\"foot\">"<<medic->getProfessionalLicense()<<" - "<<medic->getLastName()<<"  "<<medic->getName()<<"'s sign<br>Phone number: "<<medic->getPhone()<<"<br>College: "<<medic->getCollege()<<"</p>\n";
+    output<<"<script src=\"script.js\"></script>";
+    output<<"</div></body>";
+    output.close();
+
+    string command;
+    #ifdef _WIN32
+    command = "start "+nameFile; // Para Windows
+    #elif __APPLE__
+    command = "open "+nameFile;  // Para macOS
+    #elif __linux__
+    command = "xdg-open "+nameFile; // Para Linux
+    #endif
+    system(command.c_str());
+}
+
 
 
 
@@ -128,20 +172,9 @@ void MedicalCheck::printHTML(){
     string nameFile="Records/"+hour+"-MedicalCheck-"+patient->getName()+"-"+customer->getLastName()+"-"+customer->getName()+".html";
     ofstream output(nameFile);
 
-    output<<"<head>\n";
-    output<<"<title>Medical Check</title>\n";
-    output<<"<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n";
-    output<<"</head>\n";
-    output<<"<body><div class=\"MainBody\">\n";
-    output<<"<p class=\"date\">"<<dateDay<<"/"<<dateMonth<<"/"<<dateYear<<"</p>\n";
-    output<<"<h1>Medical check</h1>\n";
-    output<<"<h2>Pet data:</h2>\n";
-    output<<"<p class=\"PetData\">Name: "<<patient->getName()<<"</p>\n";
-    output<<"<p class=\"PetData\">Breed: "<<patient->getBreed()<<"</p>\n";
-    output<<"<p class=\"PetData\">Age: "<<ops.getAgeDifference(patient->getBirth())<<"</p>\n";
-    output<<"<p class=\"PetData\">Annotations: "<<patient->getAnnotations()<<"</p>\n";
+    startingHTML(output, "Medical check");
 
-    output<<"<h2>Description: </h2>\n";
+    output<<"<h2>Description of the patient's case: </h2>\n";
     output<<"<p>"<<description<<"</p>\n";
 
     output<<"<h2>Diagnosis: </h2>\n";
@@ -150,22 +183,7 @@ void MedicalCheck::printHTML(){
     output<<"<h2>Treatment: </h2>\n";
     output<<"<p>"<<treatment<<"</p>\n";
 
-    output<<"<p class=\"line\"></p>";
-    output<<"<p class=\"foot\">"<<medic->getProfessionalLicense()<<" - "<<medic->getLastName()<<"  "<<medic->getName()<<"'s sign</p>\n";
-    output<<"<script src=\"script.js\"></script>";
-    output<<"</div></body>";
-    output.close();
-
-    string command;
-    #ifdef _WIN32
-    command = "start "+nameFile; // Para Windows
-    #elif __APPLE__
-    command = "open "+nameFile;  // Para macOS
-    #elif __linux__
-    command = "xdg-open "+nameFile; // Para Linux
-    #endif
-    system(command.c_str());
-
+    endingHTML(output, nameFile);
 }
 
 
@@ -206,24 +224,22 @@ void Surgery::printForDB(vector<int> index){
     cout<<postSurgeryTreatment<<"\n";
 }
 
-void Surgery::printHTML(){
+void Surgery::printHTML(){ 
     string date=to_string(dateDay)+"-"+to_string(dateMonth)+"-"+to_string(dateMonth);
-    string nameFile="records/"+date+"-Surgery-"+patient->getName()+"-"+customer->getLastName()+"-"+customer->getName()+".html";
+    vector<int> time=ops.currentTime();
+    string hour=date+"-"+to_string(time[0])+"-"+to_string(time[1])+"-"+to_string(time[2]);
+    string nameFile="Records/"+hour+"-Surgery-"+patient->getName()+"-"+customer->getLastName()+"-"+customer->getName()+".html";
     ofstream output(nameFile);
 
-    output<<"<h1>Medical check</h1>";
+    startingHTML(output, "Surgery");
 
-    output.close();
+    output<<"<h2>Description of the surgery: </h2>\n";
+    output<<"<p>"<<description<<"</p>\n";
 
-    string command;
-    #ifdef _WIN32
-    command = "start "+nameFile; // Para Windows
-    #elif __APPLE__
-    command = "open "+nameFile;  // Para macOS
-    #elif __linux__
-    command = "xdg-open "+nameFile; // Para Linux
-    #endif
-    system(command.c_str());
+    output<<"<h2>Post surgey treatment: </h2>\n";
+    output<<"<p>"<<postSurgeryTreatment<<"</p>\n";
+
+    endingHTML(output, nameFile);
 }
 
 
@@ -274,22 +290,26 @@ void Grooming::printForDB(vector<int> index){
 
 void Grooming::printHTML(){
     string date=to_string(dateDay)+"-"+to_string(dateMonth)+"-"+to_string(dateMonth);
-    string nameFile="records/"+date+"-Grooming-"+patient->getName()+"-"+customer->getLastName()+"-"+customer->getName()+".html";
+    vector<int> time=ops.currentTime();
+    string hour=date+"-"+to_string(time[0])+"-"+to_string(time[1])+"-"+to_string(time[2]);
+    string nameFile="Records/"+hour+"-Grooming-"+patient->getName()+"-"+customer->getLastName()+"-"+customer->getName()+".html";
     ofstream output(nameFile);
 
-    output<<"<h1>Medical check</h1>";
+    startingHTML(output, "Grooming");
 
-    output.close();
+    output<<"<h2>Description of customer's order: </h2>\n";
+    output<<"<p>"<<description<<"</p>\n";
 
-    string command;
-    #ifdef _WIN32
-    command = "start "+nameFile; // Para Windows
-    #elif __APPLE__
-    command = "open "+nameFile;  // Para macOS
-    #elif __linux__
-    command = "xdg-open "+nameFile; // Para Linux
-    #endif
-    system(command.c_str());
+    output<<"<h2>Meterial used during the grooming session: </h2>\n";
+    output<<"<p>"<<materialUsed<<"</p>\n";
+
+    output<<"<h2>Initial appearance: </h2>\n";
+    output<<"<p>"<<initialState<<"</p>\n";
+
+    output<<"<h2>Final appearance:</h2>\n";
+    output<<"<p>"<<finalState<<"</p>\n";
+
+    endingHTML(output, nameFile);
 }
 
 
@@ -372,22 +392,23 @@ void Hotel::printForDB(vector<int> index){
 
 void Hotel::printHTML(){
     string date=to_string(dateDay)+"-"+to_string(dateMonth)+"-"+to_string(dateMonth);
-    string nameFile="records/"+date+"-Hotel-"+patient->getName()+"-"+customer->getLastName()+"-"+customer->getName()+".html";
+    vector<int> time=ops.currentTime();
+    string hour=date+"-"+to_string(time[0])+"-"+to_string(time[1])+"-"+to_string(time[2]);
+    string nameFile="Records/"+hour+"-Hotel-"+patient->getName()+"-"+customer->getLastName()+"-"+customer->getName()+".html";
     ofstream output(nameFile);
 
-    output<<"<h1>Medical check</h1>";
+    startingHTML(output, "Hotel");
 
-    output.close();
+    output<<"<h2>Description of the stay: </h2>\n";
+    output<<"<p>"<<description<<"</p>\n";
 
-    string command;
-    #ifdef _WIN32
-    command = "start "+nameFile; // Para Windows
-    #elif __APPLE__
-    command = "open "+nameFile;  // Para macOS
-    #elif __linux__
-    command = "xdg-open "+nameFile; // Para Linux
-    #endif
-    system(command.c_str());
+    output<<"<h2>Start date: </h2>\n";
+    output<<"<p>"<<startDateDay<<"/"<<startDateMonth<<"/"<<startDateYear<<"</p>\n";
+
+    output<<"<h2>Final date: </h2>\n";
+    output<<"<p>"<<endDateDay<<"/"<<endDateMonth<<"/"<<endDateYear<<"</p>\n";
+
+    endingHTML(output, nameFile);
 }
 
 #endif

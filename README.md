@@ -61,12 +61,13 @@ Al programa se le implementó un sistema en el cual recibe strings de entrada, y
 
 Sin embargo, si al archivo `database.txt` se ve corrompido o no existe, podría hacer que el programa no funcione, ya que al iniciar la ejecución del programa éste mismo trata de abrir dicho archivo para obtener los datos que se le han ido ingresando conforme el paso del tiempo.
 
+El programa utiliza vectores, por lo mismo, se ocuparía una versión de C++ que contenga dicha biblioteca. En caso de no tenerla podría ocasionar que el programa no compile.
+
 Hay otro caso en donde no sería tal cual que deje de funcionar, sin embargo, podría hacer que el PDF generado se vea mal. Este caso se podría deber a que cuando el archivo `.js` manda a imprimir la página, el usuario tenga o no opciones marcadas en ese apartado. Como por ejemplo:
 
  - El ancho de página
  - Los márgenes
  - Imprimir los fondos
-
 
 De la misma manera, el archivo `.css` utiliza una fuente de [Google fonts](https://fonts.google.com/), por lo que si no se cuenta con internet, sí se podrá imprimir, pero, no se vería como se tenía planeado.
 

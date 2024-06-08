@@ -1,90 +1,77 @@
 V
-Mondragon
-Juana
-443 111 1111
-26316261
-UAQ
-V
-Lozano
-Mariano
-443 222 2222
-3289379817
-UMSNH
-O
-Aguado
-Adrian
+Perez
+Juan
 442 111 1111
-O
-Lopez
-Daniel
-442 999 9999
+123456789
+ITESM
 O
 Canedo
 Edmundo
-443 423 7305
+442 222 2222
 P
 Mike
 M
-14
-4
-105
+12
+7
+115
 Cat
 -
 0
 O
-Dolores
-Juan Carlos
-442 555 5555
-O
-Perez
-Maria
+Valdez
+Benjamin
 442 333 3333
-O
-Juan
-Perez
-442 4444 4444
 P
-Manny
-F
+Taro
+M
 1
 1
-101
-Dog
+120
+Cat
 -
 0
+G
+0
+1
+0
+7
+6
+124
+Taro should take a bath.
+Shampoo.
+Very handsome, but a little bit dirty.
+Even more handsome
+S
+0
+0
+0
+7
+6
+124
+Sterilization
+Mainly rest. Shouldn't use his litter box.
 M
 0
-2
 0
-30
-5
-124
-Presented stomach pain
-Food poisoning
-Rest
-G
-1
-2
 0
-30
-5
+7
+6
 124
-Cut nails and give a bath
-Shampoo
-Very nasty nails and brownish color
-Handsome pet
+Mike throwed up.
+Ate too much grass.
+Check he doesn't eat that much grass.
 H
 0
-5
 0
-30
-5
+0
+7
+6
 124
-Feed 3 times a day
-30
-5
+Owners are going on vacation, they need someone to feed him.
+7
+6
 124
-12
+7
 6
 124
 X

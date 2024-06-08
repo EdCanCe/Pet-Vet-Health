@@ -39,8 +39,8 @@ Pet::Pet(){
         cout<<"The given sex doesn't exist, type again: ";
         sex=ops.getChar();
     }
-    cout<<"Birth of the pet:\n\tDay(0-31): ";
-    birthDay=ops.getInt(0, 31);
+    cout<<"Birth of the pet:\n\tDay(1-31): ";
+    birthDay=ops.getInt(1, 31);
     cout<<"\tMonth(1-12): ";
     birthMonth=ops.getInt(1,12);
     cout<<"\tYear(19XX-20XX): ";

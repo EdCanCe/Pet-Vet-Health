@@ -41,14 +41,15 @@ p{
     text-align: right;
     margin-right: -1.3cm;
     opacity: 0.6;
-    margin-top: 0.5cm;
+    margin-top: 0.4cm;
 }
 
 .foot{
     position: absolute;
-    bottom: 0.4cm;
+    bottom: 0.27cm;
     width: calc(21.54cm - 4cm);
     text-align: center;
+    font-size: 0.5em;
 }
 
 .line{
@@ -60,6 +61,19 @@ p{
     border-bottom: 1px solid black;
 }
 
-.PetData{
-    margin: 0 1cm;
+.MainData{
+    display: flex;
+    justify-content: space-between;
+}
+
+.PetData, .OwnerData{
+    width: 48%;
+}
+
+.PetData p, .OwnerData p{
+    margin-bottom: 0;
+}
+
+.OwnerData *{
+    text-align: right;
 }
