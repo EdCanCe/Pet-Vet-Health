@@ -1,5 +1,5 @@
-# Pet-Vet-Health
- 
+# Pet-Vet-Health 
+
 Pet Vet Health es un proyecto realizado en la clase TC1030. Trata sobre un sistema gestor para las consultas de una veterinaria, en donde se pueden añadir consultas y servicios en general, para posteriormente guardar su información, y de esa forma, en un futuro buscarla en caso de ser necesario. De la misma manera, se pueden generar archivos `HTML` que se pueden convertir a PDF.
 
 ### Indice:
@@ -46,8 +46,6 @@ Al final, con los servicios hechos, se pueden imprimir de 2 maneras, una de ést
 Si lo único que se quiere hacer es probar el funcionamiento de clases se recomienda compilar y correr `test.cpp` ya que no ocupa input por parte del usuario. 
 
 Si se quiere ver el funcionamiento real del programa compilar y correr `main.cpp`, ya que es el verdadero programa. Se incluyeron unos pequeños datos dentro de éste para que de igual forma pueda ser probado.
-
-La documentación en general está comentada en el código, pero también puede ver la documentación en [este archivo](https://github.com/EdCanCe/Pet-Vet-Health/blob/main/Extra/Documentation.md)
 
 ## Diagrama UML
 
