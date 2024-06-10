@@ -600,7 +600,16 @@ void PetVetHealth::goToPet(int ownerIndex, int petIndex){
     }
 }
 
-
+/**
+ * Show the list of the vets.
+ * 
+ * Prints all of the vets names. Then asks the user to select
+ * one, the user will need to type the index of that vet.
+ * 
+ * @param int index: The index of the veterinary.
+ * 
+ * @return
+ */
 int PetVetHealth::showVets(){
     cout<<bfc<<"[[ List of vets ]]"<<nfc<<"\n";
     fore(i,0,vets.size()){
@@ -612,6 +621,18 @@ int PetVetHealth::showVets(){
     return q;
 }
 
+/**
+ * Show the services a pet has.
+ * 
+ * Prints all of the services a pet has been through. At the and
+ * asks to the user what to do. If the user wants to get the html
+ * version of a service then it'l be needed that the user types
+ * it's index. Otherwhise only type -1 to go back.
+ * 
+ * @param int index: The index of the owner.
+ * 
+ * @return
+ */
 void PetVetHealth::showRecords(Pet& patient){
     vector<Service*> filteredServices;
     fore(i,0,services.size()){
