@@ -4,13 +4,14 @@ Pet Vet Health es un proyecto realizado en la clase TC1030. Trata sobre un siste
 
 ### Indice:
 
- - [Inicio](#pet-vet-health)
- - [Correciones realizadas](#correcciones-realizadas)
- - [Funcionamiento](#funcionamiento)
- - [Diagrama UML](#diagrama-uml)
- - [Casos en los que dejaría de funcionar](#aspectos-que-pueden-afectar-que-deje-de-funcionar)
- - [Como correr el programa](#como-correr-el-programa)
- - [Capturas del funcionamiento](#capturas-del-funcionamiento-del-programa)
+- [Pet-Vet-Health](#pet-vet-health)
+    - [Indice:](#indice)
+  - [Correcciones realizadas](#correcciones-realizadas)
+  - [Funcionamiento](#funcionamiento)
+  - [Diagrama UML](#diagrama-uml)
+  - [Aspectos que pueden afectar que deje de funcionar](#aspectos-que-pueden-afectar-que-deje-de-funcionar)
+  - [Como correr el programa](#como-correr-el-programa)
+  - [Capturas del funcionamiento del programa](#capturas-del-funcionamiento-del-programa)
 
 ## Correcciones realizadas
 
@@ -86,3 +87,23 @@ Para correr en windows con bash: `./a.exe`.
 Para la generación de PDF se recomienda desactivar la función de márgenes dentro de el apartado de imprimir en el navegador. También se recomienda activar el apartado de los gráficos de fondo. La escala se recomienda dejarla por defecto.
 
 ## Capturas del funcionamiento del programa
+
+<p align="center">
+  <img src="Extra/cap1.png" alt=""/>
+</p>
+
+<p align="center">
+  <img src="Extra/cap2.png" alt=""/>
+</p>
+
+<p align="center">
+  <img src="Extra/cap3.png" alt=""/>
+</p>
+
+<p align="center">
+  <img src="Extra/cap4.png" alt=""/>
+</p>
+
+<p align="center">
+  <img src="Extra/cap5.png" alt=""/>
+</p>
