@@ -2,7 +2,6 @@
 *
 * Pet Vet Health Proyect - Operations Class
 * A01645576
-* 07/06/2024
 * This class is used by other classes to do certain
 * operations, just as the name says.
 * Mainly the operations are to control user input and

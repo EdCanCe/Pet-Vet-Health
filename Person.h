@@ -2,7 +2,6 @@
 *
 * Pet Vet Health Proyect - Person Class
 * A01645576
-* 07/06/2024
 * This class contains the data of a person. It has the child
 * classes Vet and Owner.
 *
@@ -251,10 +250,14 @@ void Owner::printForDB(){
 
 
 
+//Declaration of Vet class that inherits from Person class
 class Vet : public Person{
+    //Declaration of private attributes
     private:
         string professionalLicense;
         string college;
+
+    //Declaration of public methods
     public:
         Vet();
         Vet(string, string, string, string, string);
@@ -264,6 +267,13 @@ class Vet : public Person{
         void printForDB();
 };
 
+/**
+ * It is the constructor of this object.
+ *
+ * Uses the Person() method. It constructs the object.
+ * 
+ * @return Vet object.
+ */
 Vet::Vet():Person(){
     cout<<"Professional license: ";
     professionalLicense=ops.getString();
@@ -272,25 +282,70 @@ Vet::Vet():Person(){
     cout<<"\n";
 }
 
+/**
+ * It is the constructor of this object.
+ *
+ * Overloads the Vet() method. It constructs the object.
+ *
+ * @param string newName: The name of the veterinary.
+ * @param string newLastName: The last name of the veterinary.
+ * @param string newPhoneNumber: The phone number the veterinary.
+ * @param string newProfessionalLicense: The professional license
+ * of the veterinary
+ * @param string newCollege: The college the veterinary came from.
+ * 
+ * @return Vet object.
+ */
 Vet::Vet(string newName, string newLastName, string newPhoneNumber, string newProfessionalLicense, string newCollege):Person(newName, newLastName, newPhoneNumber){
     professionalLicense=newProfessionalLicense;
     college=newCollege;
 }
 
+/**
+ * Returns the professional license of the veterinary.
+ *
+ * @param
+ * 
+ * @return string - The professional license of the veterinary.
+ */
 string Vet::getProfessionalLicense(){
     return professionalLicense;
 }
 
+/**
+ * Returns the college the veterinary came from.
+ *
+ * @param
+ * 
+ * @return string - The college the veterinary came from.
+ */
 string Vet::getCollege(){
     return college;
 }
 
+/**
+ * Prints the data of a veterinary.
+ * 
+ * @param 
+ * 
+ * @return
+ */
 void Vet::showData(){
     cout<<gfc<<lastName<<" "<<name<<nfc<<":\n";
     cout<<"Phone: "<<phoneNumber<<"\n";
     cout<<college<<": "<<professionalLicense<<"\n";
 }
 
+/**
+ * Prints the data of a veterinary.
+ * 
+ * It's printed in a way that can be used to store the data
+ * in the database.
+ * 
+ * @param 
+ * 
+ * @return
+ */
 void Vet::printForDB(){
     cout<<lastName<<"\n"<<name<<"\n"<<phoneNumber<<"\n"<<professionalLicense<<"\n"<<college<<"\n";
 }

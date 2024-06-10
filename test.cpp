@@ -31,12 +31,6 @@ int main(){
         Duenos[0]->getPet(i).showData();
     }
 
-    Duenos[0]->getPet(2).setAnnotations("If it cannot be found search in the sawdust, he likes to hide in there");
-    cout<<rfc<<"\n\nMascotas del primer dueno despues de modificacion:\n"<<nfc;
-    fore(i,0,Duenos[0]->petSize()){
-        Duenos[0]->getPet(i).showData();
-    }
-
     Duenos[1]->addPet(*(new Pet("Michis", 'F', 6, 6, 116, "Street Cat"))); //El año 116 corresponde a 2016.
     cout<<rfc<<"\n\nMascotas del segundo dueno:\n"<<nfc;
     fore(i,0,Duenos[1]->petSize()){
