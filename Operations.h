@@ -27,7 +27,7 @@ using namespace std;
 
 //Declaration of Operations class
 class Operations{
-    //Since it only has methods, there is no reason to have private attributes.
+    //Since it only has methods, there is no reason to have private attributes
 
     //Declaration of the methods Operations will have
     public:

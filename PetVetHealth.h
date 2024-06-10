@@ -1,3 +1,11 @@
+/*
+*
+* Pet Vet Health Proyect - PetVetHealth Class
+* A01645576
+* This class is the main system. It has loops that are used
+* to do different things depending on the user input.
+*
+*/
 #ifndef PETVETHEALTH_H
 #define PETVETHEALTH_H
 
@@ -6,11 +14,17 @@
 #include <algorithm>
 #include "Service.h"
 
+//Declaration of PetVetHealth class
 class PetVetHealth{
+    //Declaration of private attributes
     private:
         vector<Vet*> vets;
         vector<Owner*> owners;
         vector<Service*> services;
+
+    //Declaration of public methods.
+    public:
+        void start();
         void exit();
         void freeMemory();
         void loadData();
@@ -25,11 +39,19 @@ class PetVetHealth{
         int showVets();
         void showRecords(Pet&);
         vector<int> getIndex(Vet&, Owner&, Pet&);
-
-    public:
-        void start();
 };
 
+/**
+ * Starts the system.
+ * 
+ * Clears the screen, loads the data, prints a message, starts
+ * the loop of all the actions, and then, when the loop ends it
+ * exits the system.
+ * 
+ * @param 
+ * 
+ * @return
+ */
 void PetVetHealth::start(){
     clear();
     loadData();
@@ -39,13 +61,32 @@ void PetVetHealth::start(){
     exit();
 }
 
+/**
+ * Exits the system
+ * 
+ * Stores all the data in a file, clears the screen, and frees the
+ * memory
+ * 
+ * @param 
+ * 
+ * @return
+ */
 void PetVetHealth::exit(){
     writeData();
     clear();
     freeMemory();
-    cout<<"Exiting...";
 }
 
+/**
+ * Frees the memory.
+ * 
+ * Loops through the data (services, vets, owners and pets)
+ * and deletes each of the elements to free the memory.
+ * 
+ * @param 
+ * 
+ * @return
+ */
 void PetVetHealth::freeMemory(){
     for(Service* i:services){
         delete i;
@@ -61,6 +102,21 @@ void PetVetHealth::freeMemory(){
     }
 }
 
+/**
+ * Loads the data.
+ * 
+ * By having "database.txt" as the input, uses the stored data
+ * and starts to fill each of the vectors representing the
+ * different data. It does this by looping until the file ends.
+ * Depending on the first char that it reads it means if it is a
+ * service, a vet, an owner or a pet. Finally, it sorts the vets
+ * and the owners depending on their last name, and if it's the
+ * same, then on their name.
+ * 
+ * @param 
+ * 
+ * @return
+ */
 void PetVetHealth::loadData(){
     ifstream inputFile("database.txt"); 
     string s;
@@ -215,6 +271,18 @@ void PetVetHealth::loadData(){
     });
 }
 
+/**
+ * Stores the data.
+ * 
+ * By using the methods of the different classes to store
+ * the data for the database it writes it in the "database.txt"
+ * file. To print the services uses polymorphism. At the end it 
+ * closes the file.
+ * 
+ * @param 
+ * 
+ * @return
+ */
 void PetVetHealth::writeData(){
     FILE *fp=freopen("database.txt", "w", stdout);
     fore(i,0,vets.size()){
@@ -242,6 +310,16 @@ void PetVetHealth::writeData(){
     #endif
 }
 
+/**
+ * Clears the screen.
+ * 
+ * It does this by checking the OS and using their respective
+ * command to clear the console.
+ * 
+ * @param 
+ * 
+ * @return
+ */
 void PetVetHealth::clear(){
 #ifdef _WIN32
     system("cls");
@@ -250,6 +328,16 @@ void PetVetHealth::clear(){
 #endif
 }
 
+/**
+ * The main loop of the program.
+ * 
+ * Prints the different options that can be accesed and
+ * depending on the user input does something different.
+ * 
+ * @param 
+ * 
+ * @return
+ */
 void PetVetHealth::loop(){
     int q=-1;
     while(q!=0){
@@ -293,11 +381,33 @@ void PetVetHealth::loop(){
     }
 }
 
+/**
+ * Waits for user input.
+ * 
+ * Tries to get a string, therefore making the system wait
+ * until the user presses enter.
+ * 
+ * @param 
+ * 
+ * @return
+ */
 void PetVetHealth::waitUser(){
     cout<<"Press enter to continue: ";
     string s=ops.getString();
 }
 
+/**
+ * Gets the indexes of a ver, an owner and a pet.
+ * 
+ * Given a vet, an owner and a pet it iterates through the vectors
+ * that store them to search for their index.
+ * 
+ * @param Vet& newVet: The reference of the veterinary.
+ * @param Owner& newOwner: The reference of the owner.
+ * @param Pet& newPet: The reference of the pet.
+ * 
+ * @return vector<int> - The indexes asked for. Being the vet index, the owner index and the pet index(in the vector of that owner).
+ */
 vector<int> PetVetHealth::getIndex(Vet& newVet, Owner& newOwner, Pet& newPet){
     int a, b, c;
     fore(i,0,vets.size()){
@@ -321,6 +431,17 @@ vector<int> PetVetHealth::getIndex(Vet& newVet, Owner& newOwner, Pet& newPet){
     return v;
 }
 
+/**
+ * Show the list of the owners.
+ * 
+ * Prints all of the owners names. Then asks the user to select
+ * one or to go back. If the user wants to select one needs to 
+ * type the index of that owner.
+ * 
+ * @param 
+ * 
+ * @return
+ */
 void PetVetHealth::showOwners(){
     cout<<bfc<<"[[ List of owners ]]"<<nfc<<"\n";
     if(owners.size() == 0){
@@ -339,6 +460,17 @@ void PetVetHealth::showOwners(){
     goToOwner(q);
 }
 
+/**
+ * Shows the owner data and displays a menu.
+ * 
+ * Prints the owner data. Then displays the menu with the different
+ * options that can be done and waits for the user input to know
+ * what it needs to do.
+ * 
+ * @param 
+ * 
+ * @return
+ */
 void PetVetHealth::goToOwner(int index){
     cout<<"\n";
     int q=-1;
@@ -367,6 +499,17 @@ void PetVetHealth::goToOwner(int index){
     }
 }
 
+/**
+ * Show the list of the pets an owner has.
+ * 
+ * Prints all of the pets names. Then asks the user to select
+ * one or to go back. If the user wants to select one needs to 
+ * type the index of that pet.
+ * 
+ * @param int index: The index of the owner.
+ * 
+ * @return
+ */
 void PetVetHealth::showPets(int index){
     cout<<bfc<<"[[ List of pets ]]"<<nfc<<"\n";
     if(owners[index]->petSize() == 0){
@@ -385,6 +528,18 @@ void PetVetHealth::showPets(int index){
     goToPet(index, q);
 }
 
+/**
+ * Shows the pet data and displays a menu.
+ * 
+ * Prints the pet data. Then displays the menu with the different
+ * options that can be done and waits for the user input to know
+ * what it needs to do.
+ * 
+ * @param int ownerIndex: The index of the owner.
+ * @param int petIndex: The index of the pet.
+ * 
+ * @return
+ */
 void PetVetHealth::goToPet(int ownerIndex, int petIndex){
     cout<<"\n";
     int q=-1;
@@ -444,6 +599,7 @@ void PetVetHealth::goToPet(int ownerIndex, int petIndex){
         }
     }
 }
+
 
 int PetVetHealth::showVets(){
     cout<<bfc<<"[[ List of vets ]]"<<nfc<<"\n";
