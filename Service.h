@@ -382,6 +382,7 @@ Hotel::Hotel(Vet& newMedic, Owner& newOwner, Pet& newPet, int orderDate[], strin
 void Hotel::print(){
     startingPrint("Hotel entry registered ");
     cout<<"Starting date: "<<startDateDay<<"/"<<startDateMonth<<"/"<<startDateYear+1900<<"\n\nEnding date: "<<endDateDay<<"/"<<endDateMonth<<"/"<<endDateYear+1900<<"\n\n";
+    endingPrint();
 }
 
 void Hotel::printForDB(vector<int> index){

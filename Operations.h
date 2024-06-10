@@ -45,11 +45,12 @@ class Operations{
 };
 
 /**
- * Operations is the constructor of this object.
+ * It is the constructor of this object.
  *
  * It constructs the object
  *
  * @param
+ * 
  * @return Operations object
  */
 Operations::Operations(){}
@@ -63,7 +64,7 @@ Operations::Operations(){}
  * 
  * @param 
  * 
- * @return vector<int> having day, month and year in that order
+ * @return vector<int> - having day, month and year in that order
  */
 vector<int> Operations::currentDate(){
     //Portion of code based on https://cplusplus.com/reference/ctime/localtime/
@@ -106,7 +107,7 @@ vector<int> Operations::currentTime(){
  * passed, it calculates the age difference between two different
  * dates.
  * 
- * @param vector<int> past Having the day, month and year in that order.
+ * @param vector<int> past: Having the day, month and year in that order.
  * 
  * @return int - The age difference in years.
  */
@@ -162,7 +163,8 @@ int Operations::getInt(){
  * integer, then checks if it's between the given range. In case
  * it's not it asks again for another number.
  * 
- * @param 
+ * @param int a: The lower number of the range.
+ * @param int b: The higher number of the range.
  * 
  * @return int - The integer the user gave as input.
  */
@@ -183,7 +185,7 @@ int Operations::getInt(int a, int b){
  * This method overloads getInt(). Given a string it loops through
  * it to make an integer out of it.
  * 
- * @param 
+ * @param string s: The number as a string.
  * 
  * @return int - The integer the user gave as input.
  */
