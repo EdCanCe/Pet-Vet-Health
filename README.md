@@ -50,7 +50,7 @@ Si se quiere ver el funcionamiento real del programa compilar y correr `main.cpp
 
 ## Diagrama UML
 
-![](Extra/UML.jpeg)
+![](Extra/UML.png)
 
 ## Aspectos que pueden afectar que deje de funcionar
 
