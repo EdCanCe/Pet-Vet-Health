@@ -368,9 +368,9 @@ void PetVetHealth::loop(){
             owners.push_back(new Owner);
             sort(owners.begin(), owners.end(), [](Owner* a, Owner* b){
                 if(a->getLastName() == b->getLastName()){
-                    return a->getLastName() < b->getLastName();
+                    return a->getName() < b->getName();
                 }
-                return a->getName() < b->getName();
+                return a->getLastName() < b->getLastName();
             });
             break;
         case 3:
